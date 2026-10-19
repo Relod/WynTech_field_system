@@ -28,8 +28,14 @@
   const STORAGE_KEY = 'wyntech.campo.v1';
 
   // Web App oficial (Apps Script): consulta o SIAD e gera o PDF do Laudo.
-  // Troque a URL aqui caso a implantação do script mude.
-  const OFFICIAL_LAUDO_URL = 'https://script.google.com/macros/s/AKfycbzRdNPvVt5u4WMn5BXJvsONZo7tBRPCd0-v8XdoqWDYHgTPTd3BO5dekP22izCACH5s/exec';
+  // A URL não fica versionada; configure localStorage["wyntech.officialLaudoUrl"].
+  const OFFICIAL_LAUDO_URL = (() => {
+    try {
+      return localStorage.getItem('wyntech.officialLaudoUrl') || '';
+    } catch {
+      return '';
+    }
+  })();
 
   function fmtLongDate(ddmmyyyy) {
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(String(ddmmyyyy || ''))) return ddmmyyyy || '—';
@@ -1953,7 +1959,15 @@ IMPRESSORA MATRICIAL:
   function init() {
     hydrateInputs();
     const officialLink = $('#official-open');
-    if (officialLink) officialLink.href = OFFICIAL_LAUDO_URL;
+    if (officialLink) {
+      if (OFFICIAL_LAUDO_URL) {
+        officialLink.href = OFFICIAL_LAUDO_URL;
+      } else {
+        officialLink.removeAttribute('href');
+        officialLink.setAttribute('aria-disabled', 'true');
+        officialLink.title = 'Configure localStorage.wyntech.officialLaudoUrl para habilitar.';
+      }
+    }
     renderRecent();
     renderKpis();
     renderRoute();

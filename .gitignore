@@ -18,3 +18,10 @@ Thumbs.db
 
 # Build temporário
 prototipo/.build/
+
+# MVP real — banco local e uploads
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
+uploads/
+coverage/

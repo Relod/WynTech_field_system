@@ -1,223 +1,194 @@
 # Wyntech Campo TJMG
 
-Console de campo para atendimento, rollout e documentação de equipamentos de
-informática do TJMG. Este repositório contém um **protótipo navegável,
-autocontido e offline-first**, além da ponte de integração com o gerador
-oficial de Laudo em Google Apps Script.
+Console de campo para registrar atendimentos, equipamentos, trocas e documentos
+de informática do TJMG. O repositório reúne o **MVP real** (API, banco,
+autenticação e frontend) e o **protótipo navegável aprovado**, preservado como
+referência visual e documental.
 
-**Versão:** 0.7.0 · **Atualizado em:** 19/10/2026 · **Uso interno Wyntech/TJMG**
+**Versão do MVP:** 0.8.0 · **Protótipo:** 0.7.0 · **Atualizado em:** 19/10/2026 · **Uso interno Wyntech/TJMG** · Node.js 24+ · SQLite · sem dependências de runtime
 
 <table align="center">
   <tr>
-    <td><img src="docs/capturas/desktop-workspace.png" alt="Painel operacional no desktop" width="720"></td>
-    <td><img src="docs/capturas/mobile-workspace.png" alt="Painel operacional no celular" width="180"></td>
+    <td><img src="docs/capturas/mvp/dashboard-desktop.png" alt="Painel do MVP no desktop" width="720"></td>
+    <td><img src="docs/capturas/mvp/dashboard-mobile.png" alt="Painel do MVP no celular" width="180"></td>
   </tr>
 </table>
 
 ---
 
-## Visão geral
+## Início rápido
 
-- **8 telas:** Painel, Chamado, Equipamento, POP030, Rollout, Fechamento,
-  Documentos e Histórico.
-- **Desktop e mobile:** sidebar fixa no desktop; topbar + bottom nav no mobile.
-  Os grids colapsam em 1080, 900, 760, 560 e 400 px.
-- **Sem frameworks e sem dependências de runtime:** HTML, CSS e JavaScript
-  puros, em um único arquivo gerado (`prototipo/index.html`).
-- **Persistência local:** chamado, checklist, grades, fotos e rollout ficam em
-  `localStorage` (`wyntech.campo.v1`). Nada é enviado a um servidor pelo
-  protótipo.
-- **Documentos A4:** Laudo Técnico Unificado v5.0 (atendimento e rollout) e
-  Romaneio de Substituição, com modos **Preenchido** e **Em branco**.
-- **Impressão/PDF local:** ação “Imprimir / Salvar PDF” via `window.print()`,
-  sem PDF falso e sem dependência de biblioteca.
-- **Gerador oficial:** atalho para o Web App do Apps Script e exportação de
-  rascunho JSON no formato que o próprio gerador importa.
-
-## Capturas
-
-### Mobile
-
-| Painel | Chamado | Equipamento | POP030 |
-|---|---|---|---|
-| <img src="docs/capturas/mobile-workspace.png" width="150" alt="Painel"> | <img src="docs/capturas/mobile-chamado.png" width="150" alt="Chamado"> | <img src="docs/capturas/mobile-equipamento.png" width="150" alt="Equipamento"> | <img src="docs/capturas/mobile-pop030.png" width="150" alt="POP030"> |
-
-| Rollout | Fechamento | Documentos | Histórico |
-|---|---|---|---|
-| <img src="docs/capturas/mobile-rollout.png" width="150" alt="Rollout"> | <img src="docs/capturas/mobile-fechamento.png" width="150" alt="Fechamento"> | <img src="docs/capturas/mobile-documentos.png" width="150" alt="Documentos"> | <img src="docs/capturas/mobile-historico.png" width="150" alt="Histórico"> |
-
-### Documentos
-
-| Laudo preenchido | Laudo em branco | Romaneio preenchido | Romaneio em branco |
-|---|---|---|---|
-| <img src="docs/capturas/laudo-preenchido.png" width="210" alt="Laudo preenchido"> | <img src="docs/capturas/laudo-em-branco.png" width="210" alt="Laudo em branco"> | <img src="docs/capturas/romaneio-preenchido.png" width="210" alt="Romaneio preenchido"> | <img src="docs/capturas/romaneio-em-branco.png" width="210" alt="Romaneio em branco"> |
-
-Os PDFs gerados na validação de impressão estão em
-[`docs/exemplos/`](docs/exemplos/).
-
-## Documentos gerados
-
-| Documento | Gerado pelo Wyntech | Onde |
-|---|---|---|
-| **Laudo Técnico Unificado v5.0** | Sim — atendimento normal e rollout | Documentos → Laudo / Laudo de Rollout |
-| **Romaneio de Substituição** | Sim | Documentos → Romaneio |
-| **RAT** | Não — documento externo HP/TJMG | Lembrete no checklist |
-| **Guia de Transferência** | Não — documento externo HP/TJMG | Lembrete no checklist |
-| **Termo de Substituição** | Não — documento externo TJMG | Lembrete no checklist |
-
-O escopo documental é intencional: o Wyntech gera o Laudo e o Romaneio; RAT,
-Guia e Termo são conferidos e cobrados, mas não emitidos por este sistema.
-Detalhes em [`docs/conformidade-documental.md`](docs/conformidade-documental.md).
-
-> **Limitação visual:** os logos dos documentos são representações
-> tipográficas/vetoriais (placeholders). Os arquivos oficiais do TJMG/Wyntech
-> devem ser aplicados antes da produção; ver o §4.6 do documento de
-> conformidade.
-
-## Gerador oficial do Laudo (Apps Script)
-
-A tela **Documentos** tem o painel **Gerador oficial do Laudo**:
-
-1. Preencha o atendimento no protótipo.
-2. Clique em **Rascunho do laudo** ou **Rascunho do rollout**. O navegador baixa
-   um JSON `{ "versao": 1, "dados": { ... } }`.
-3. Clique em **Abrir gerador oficial**.
-4. No gerador, use **Abrir rascunho** e selecione o JSON baixado.
-5. Confira os dados, consulte o SIAD se necessário e clique em **Gerar Laudo**.
-   O PDF oficial é gerado no navegador e pode ser arquivado no Drive.
-
-O gerador oficial é externo, consulta o SIAD pelo patrimônio e depende de
-internet. O PDF local continua disponível como contingência offline.
-
-> **Por que não há integração automática via API?**
-> O formulário oficial usa `google.script.run`, que só existe dentro da página
-> do Apps Script, e a implantação atual não expõe `doPost`/CORS nem lê
-> parâmetros de URL para pré-preencher. A ponte por rascunho usa o recurso
-> nativo **Abrir rascunho** do próprio gerador e não exige alterar o script.
-> O caminho para prefill em um clique (alterando `doGet`/o HTML do script)
-> está descrito em [`docs/integracao-apps-script.md`](docs/integracao-apps-script.md).
-
-A URL do Web App fica em `prototipo/src/app.js`, na constante
-`OFFICIAL_LAUDO_URL`. Se a implantação mudar, atualize esse ponto e rode o
-build novamente.
-
-## Como rodar
-
-**Requisito:** Node.js 18+ apenas para build e preview. O protótipo em si é
-estático e não precisa de servidor.
+Pré-requisitos: **Node.js 24 ou superior** (o projeto usa `node:sqlite` e
+`--env-file-if-exists`). Não é necessário instalar banco, PHP, Docker ou
+dependências npm.
 
 ```bash
-npm run build       # gera prototipo/index.html a partir de prototipo/src/
-npm run preview     # http://127.0.0.1:8766/
-npm run verify:draft
+npm run setup   # cria .env, migra o SQLite e aplica o seed inicial
+npm run dev     # http://127.0.0.1:3000
 ```
 
-Também é possível abrir `prototipo/index.html` diretamente no navegador. O
-preview evita restrições de `file://` e facilita testar no celular.
+Credenciais iniciais do seed:
 
-Se a porta 8766 estiver ocupada:
+| Perfil | E-mail | Senha |
+| --- | --- | --- |
+| Administrador | `admin@wyntech.local` | `Wyntech@2026` |
+| Técnico | `tecnico@wyntech.local` | `Wyntech@2026` |
 
-```powershell
-$env:PORT=4173; npm run preview
+> Troque as duas senhas no primeiro acesso real, pela tela **Meu perfil**.
+> O seed é idempotente e não redefine senhas de usuários já existentes.
+
+Para produção, copie `.env.example` para `.env`, ajuste `NODE_ENV=production`,
+`HOST=0.0.0.0`, `COOKIE_SECURE=true`, gere um `AUTH_SECRET` forte e configure
+`OFFICIAL_LAUDO_URL`. O passo a passo está em
+[`docs/producao/05-operacao.md`](docs/producao/05-operacao.md) e
+[`docs/producao/06-deploy-hospedagem.md`](docs/producao/06-deploy-hospedagem.md).
+
+## O que já funciona
+
+- Login, logout, sessão persistida em SQLite e cookie HttpOnly.
+- Painel com resumo por status, chamados recentes e fluxo do atendimento.
+- Chamados com busca, filtros por tipo/status/comarca/período e paginação.
+- Criação e edição de chamado, mudança de status e solução aplicada.
+- Equipamentos por chamado, com ação, movimentação, locais e patrimônio.
+- Trocas vinculadas aos equipamentos retirado/instalado.
+- Registro de snapshots de Laudo, Rollout e Romaneio no banco.
+- Download do rascunho JSON `{versao:1,dados:{...}}` para o gerador oficial.
+- Atalho para o Web App oficial, configurado no servidor.
+- Tela **Meu perfil** com dados do usuário e troca de senha.
+- Interface responsiva em desktop, tablet e celular.
+- Testes de integração da API, configuração e frontend estático.
+
+## Stack e arquitetura
+
+| Camada | Escolha |
+| --- | --- |
+| Runtime | Node.js 24+ |
+| HTTP | `node:http`, roteador próprio e resposta JSON `{success,data,meta?}` |
+| Banco | SQLite (`node:sqlite`), migrações SQL e FKs ativas |
+| Autenticação | JWT HS256 + sessão persistida + `scrypt` + cookie HttpOnly |
+| Frontend | HTML, CSS e JavaScript puro em `public/` |
+| Testes | `node:test` |
+
+```text
+Navegador (SPA em public/)
+        │  cookie wyntech_session
+        ▼
+server/index.js ──► server/app.js
+                       ├── arquivos estáticos + cabeçalhos de segurança
+                       ├── autenticação (server/auth.js)
+                       ├── roteador (server/router.js)
+                       └── rotas /api/* (server/routes/)
+                                 │
+                                 ▼
+                        data/wyntech.sqlite
 ```
 
-Para abrir no celular na mesma rede:
-
-```powershell
-$env:HOST='0.0.0.0'; npm run preview
-```
+O laudo e o romaneio **A4 continuam no gerador oficial do Apps Script**, que é
+a fonte validada. O console registra o snapshot e entrega o rascunho JSON; não
+duplica o renderizador A4 nesta versão. A decisão e seus motivos estão em
+[`docs/producao/adr/0002-gerador-oficial-como-fonte-a4.md`](docs/producao/adr/0002-gerador-oficial-como-fonte-a4.md).
 
 ## Estrutura
 
 ```text
 .
-├─ prototipo/
-│  ├─ src/
-│  │  ├─ styles.css        # design system, documentos A4 e responsividade
-│  │  ├─ body.html        # estrutura das 8 telas, sprites SVG e modal
-│  │  └─ app.js           # estado, rotas, POP030, documentos e integração
-│  ├─ build.js            # concatena as fontes em index.html
-│  └─ index.html          # GERADO — não editar diretamente
-├─ scripts/
-│  ├─ serve.js            # preview local (sem dependências)
-│  └─ verify-draft.js     # teste do contrato do rascunho oficial
-├─ docs/
-│  ├─ capturas/           # evidências visuais desktop e mobile
-│  ├─ exemplos/           # PDFs A4 gerados na validação
-│  ├─ integracao-apps-script.md
-│  └─ conformidade-documental.md
-├─ architecture.md
-├─ CHANGELOG.md
-├─ package.json
-└─ LICENSE
+├── public/                  # MVP real: login, painel, chamados, perfil, CSS
+├── server/                  # API, autenticação, banco, rotas e segurança
+│   ├── migrations/          # esquema SQL versionado
+│   └── routes/              # auth, chamados, comarcas e dashboard
+├── scripts/                 # setup, migração, seed, reset e utilitários
+├── tests/                   # API, configuração e frontend estático
+├── data/                    # SQLite local (ignorado pelo Git)
+├── docs/
+│   ├── producao/            # documentação de operação, API, segurança e ADRs
+│   ├── capturas/mvp/        # capturas do MVP real
+│   └── capturas/            # capturas do protótipo aprovado
+├── prototipo/               # protótipo navegável e gerador A4 de referência
+├── architecture.md          # arquitetura vigente (resumo + links)
+└── CHANGELOG.md
 ```
 
-## Desenvolvimento
+## Scripts
 
-1. Edite os arquivos em `prototipo/src/`.
-2. Rode `npm run build`.
-3. Recarregue o preview.
+| Comando | Efeito |
+| --- | --- |
+| `npm run setup` | Cria `.env` se ausente, aplica migrações e seed. |
+| `npm run dev` | Inicia a API com `--watch` em `127.0.0.1:3000`. |
+| `npm start` | Inicia a API sem watch (produção/local). |
+| `npm run db:migrate` | Aplica migrações pendentes. |
+| `npm run db:seed` | Cria/atualiza apenas dados iniciais idempotentes. |
+| `npm run db:reset` | Apaga o banco local e recria com seed. **Destrutivo.** |
+| `npm test` | Executa todas as suítes com `node:test`. |
+| `npm run build` | Gera o protótipo autocontido em `prototipo/index.html`. |
+| `npm run preview` | Serve o protótipo localmente. |
+| `npm run verify:draft` | Valida o contrato do rascunho oficial. |
 
-O build não usa bundler, transpilador nem dependências externas. O HTML final
-é autocontido; os ícones são SVG inline e as fontes são do sistema.
+## Configuração
 
-**Estado local:** o protótipo usa a chave `wyntech.campo.v1`. Para começar do
-zero, use “Novo chamado” ou limpe a chave no DevTools. Os dados de
-demonstração são fictícios:
+As variáveis completas e os valores de produção estão documentados em
+[`docs/producao/05-operacao.md`](docs/producao/05-operacao.md). As principais:
 
-- OS `TR1185398` · patrimônios `100309615` / `100412587`
-- Comarca `Pará de Minas` · setor `Vara Cível — Gabinete`
-- Técnico `Renan Almeida` · matrícula `WYN-1044`
+| Variável | Uso |
+| --- | --- |
+| `PORT`, `HOST` | Endereço do servidor. |
+| `DB_PATH` | Caminho do SQLite; use disco persistente em produção. |
+| `AUTH_SECRET` | Segredo HS256; obrigatório e forte em produção. |
+| `TOKEN_TTL_SECONDS` | Validade da sessão (padrão 12 h). |
+| `COOKIE_SECURE` | `true` atrás de HTTPS. |
+| `OFFICIAL_LAUDO_URL` | Web App oficial `https://script.google.com/macros/s/.../exec`. |
+| `TRUST_PROXY` | Confiar em `X-Forwarded-For` apenas atrás de proxy conhecido. |
+| `LOGIN_RATE_LIMIT_MAX` | Tentativas de login por IP/e-mail em 15 min. |
 
-## Impressão e PDF
+`OFFICIAL_LAUDO_URL` não fica hardcoded no repositório. Quando ausente, o
+botão do gerador aparece desabilitado; quando presente, é validado para aceitar
+somente HTTPS em `script.google.com` com caminho `/macros/s/.../exec`.
 
-- Abra o documento e clique em **Imprimir / Salvar PDF**.
-- O CSS de impressão isola a folha A4, esconde a aplicação e o modal e usa
-  `@page { size: A4 portrait; margin: 10mm 8mm; }`.
-- A validação no Edge/Chromium gerou **1 página A4 (594,96 × 841,92 pt)** para
-  cada um dos cinco PDFs: Laudo normal, Laudo de rollout, Laudo em branco,
-  Romaneio preenchido e Romaneio em branco.
-- `print-color-adjust: exact` preserva as faixas cinza e a linha vermelha
-  mesmo com “Gráficos de plano de fundo” desligado. Ainda assim, confira a
-  prévia antes de salvar.
-- Exemplos: [`docs/exemplos/`](docs/exemplos/).
+## API e documentação
 
-## Segurança e LGPD
+- [Visão geral da produção](docs/producao/README.md)
+- [Arquitetura detalhada](docs/producao/02-arquitetura.md)
+- [Banco de dados](docs/producao/03-banco-de-dados.md)
+- [API](docs/producao/04-api.md)
+- [Operação e configuração](docs/producao/05-operacao.md)
+- [Deploy e hospedagem](docs/producao/06-deploy-hospedagem.md)
+- [Segurança](docs/producao/07-seguranca.md)
+- [Testes](docs/producao/08-testes.md)
+- [Integração com o gerador oficial](docs/producao/10-integracao-gerador.md)
+- [Frontend](docs/producao/11-frontend.md)
+- [Roadmap](docs/producao/09-roadmap.md)
+- [Arquitetura histórica PHP/MySQL](docs/producao/historico/arquitetura-plano-php-mysql.md)
 
-- Este repositório contém **dados fictícios de demonstração**. Não comite
-  nomes, patrimônios, fotos ou documentos reais de atendimento.
-- O Web App do Apps Script é uma implantação **externa e pública** no estado
-  atual. Antes de usar dados reais, restrinja “Quem tem acesso” ao domínio
-  TJMG/Google Workspace e revise o modo **Executar como**. Veja
-  [`docs/integracao-apps-script.md`](docs/integracao-apps-script.md).
-- O rascunho JSON baixado contém os dados do atendimento; trate-o como
-  documento sensível. O protótipo não envia esse arquivo para servidor algum.
-- O estado do protótipo fica no `localStorage` do dispositivo. Em máquinas
-  compartilhadas, limpe os dados ao encerrar.
-- A URL de implantação está no código. Se o repositório for público, trate a
-  URL como exposta e restrinja/rotacione a implantação conforme a política do
-  TJMG.
+## Segurança e limites conhecidos
 
-## Validação realizada
+- Troque as senhas do seed e o `AUTH_SECRET` antes de dados reais.
+- O Apps Script deve ser publicado com acesso restrito ao domínio TJMG e
+  “Executar como” revisado. Isso depende de ação no console do Google.
+- A URL do Web App é entregue pela API somente após autenticação e não está
+  versionada; ainda assim, quem tem acesso ao console pode vê-la.
+- Os logos oficiais TJMG/Wyntech ainda não estão no repositório; a interface
+  usa a marca textual e placeholders neutros.
+- A hospedagem compartilhada ainda não foi definida. O provedor precisa
+  suportar **Node.js 24**, `node:sqlite` e **disco persistente** para o arquivo
+  SQLite.
+- Upload de fotos, anexos e administração de usuários estão no roadmap, não no
+  MVP atual.
 
-- Layout desktop e mobile conferido nas 8 telas (capturas em `docs/capturas/`).
-- Documentos Laudo/Romaneio conferidos nos modos preenchido e em branco.
-- Rascunho oficial gerado no navegador e validado contra os nomes/valores de
-  campos do formulário oficial (`npm run verify:draft`).
-- Impressão: 5 PDFs, todos em uma página A4, com fundos preservados.
-- Não há suíte de testes E2E automatizada; a validação de UI foi manual, com
-  apoio de capturas headless.
+## Protótipo aprovado
 
-## Documentação
+O protótipo em `prototipo/` preserva as 8 telas, o layout validado, os templates
+A4 de Laudo/Romaneio e os PDFs de referência. Para abri-lo:
 
-- [`architecture.md`](architecture.md) — arquitetura do produto e estado do
-  protótipo (v0.7.0).
-- [`docs/integracao-apps-script.md`](docs/integracao-apps-script.md) — desenho
-  da ponte, contrato do rascunho, limitações e caminho para prefill automático.
-- [`docs/conformidade-documental.md`](docs/conformidade-documental.md) — escopo
-  documental, estrutura do Laudo/Romaneio e decisões de fidelidade.
-- [`CHANGELOG.md`](CHANGELOG.md) — histórico de versões.
+```bash
+npm run build
+npm run preview
+```
+
+O atalho do gerador no protótipo lê a chave
+`localStorage.wyntech.officialLaudoUrl`; sem ela, o link fica desabilitado.
+Capturas e detalhes do protótipo estão em
+[`docs/conformidade-documental.md`](docs/conformidade-documental.md) e
+[`docs/integracao-apps-script.md`](docs/integracao-apps-script.md).
 
 ## Licença
 
-Uso interno Wyntech/TJMG. Consulte [`LICENSE`](LICENSE).
+Uso interno Wyntech/TJMG. Projeto privado, sem licença de distribuição pública.

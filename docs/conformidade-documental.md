@@ -8,6 +8,12 @@ modelos oficiais do TJMG. Ele complementa
 [`architecture.md`](../architecture.md) e
 [`integracao-apps-script.md`](integracao-apps-script.md).
 
+> **MVP real (v0.8.0):** o console não reimplementa o A4. Ele registra o
+> snapshot, baixa o rascunho JSON e abre o gerador oficial, que permanece como
+> fonte validada da impressão. Ver
+> [`producao/adr/0002-gerador-oficial-como-fonte-a4.md`](producao/adr/0002-gerador-oficial-como-fonte-a4.md)
+> e [`producao/10-integracao-gerador.md`](producao/10-integracao-gerador.md).
+
 ## 1. Escopo
 
 ### Documentos gerados pela Wyntech

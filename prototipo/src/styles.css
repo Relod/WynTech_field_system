@@ -848,3 +848,5 @@ h3 { font-size: 14px; font-weight: 700; }
   .laudo-doc-sheet, .romaneio-doc-sheet { padding: 0 !important; }
   @page { size: A4 portrait; margin: 10mm 8mm; }
 }
+
+#official-open[aria-disabled='true'] { opacity: .55; pointer-events: none; }

@@ -2,6 +2,64 @@
 
 Todas as mudanças relevantes do projeto Wyntech Campo TJMG.
 
+## [0.8.0] — 2026-10-19
+
+### Adicionado
+
+- MVP real em Node.js 24 + SQLite, sem dependências de runtime, com API HTTP,
+  banco migrável, seed e scripts de operação.
+- Autenticação com `scrypt`, JWT HS256, sessões persistidas, cookie HttpOnly e
+  revogação de sessões.
+- Rotas de health, login/logout/me, troca de senha, chamados, equipamentos,
+  trocas, documentos, comarcas e dashboard.
+- Frontend real em `public/`: login, painel, lista/filtros, novo chamado,
+  detalhe, equipamentos, trocas, documentos, perfil e troca de senha.
+- Perfil acessível pelo avatar da topbar e pelo cartão do usuário na sidebar.
+- Rascunho de Laudo compatível com o contrato oficial
+  `{versao:1,dados:{...}}` e teste `npm run verify:draft` para protótipo + MVP.
+- Snapshot de Laudo/Rollout/Romaneio em `documentos_gerados`.
+- Atalho do gerador oficial configurável por `OFFICIAL_LAUDO_URL`, com validação
+  de domínio/caminho.
+- Migrações, reset, seed, backup documentado e suíte `node:test`.
+- Documentação de produção em `docs/producao/`, ADRs e capturas do MVP.
+
+### Alterado
+
+- `package.json` para 0.8.0 e Node >= 24.
+- README e arquitetura reescritos para o MVP real; plano PHP/MySQL preservado
+  como histórico.
+- URL oficial removida do código e do protótipo; passou a vir do servidor
+  (`OFFICIAL_LAUDO_URL`) e, no protótipo, de `localStorage`.
+- Layout do painel corrigido em duas colunas; detalhe do chamado simplificado.
+- Cartão do usuário na sidebar virou link para o perfil, liberando espaço.
+- CSP endurecida para `style-src 'self'` e `form-action 'self'`.
+
+### Corrigido
+
+- Exclusão indevida de sessão quando a senha atual estava incorreta.
+- Separação visual dos locais de equipamento sem separador órfão.
+- Validação de `data_troca`, caminho percent-encoded inválido e `PORT`.
+- Tamanho mínimo de `AUTH_SECRET` em produção.
+- Tratamento de corpo abortado e robustez do servidor HTTP.
+- Rótulo “Papel” do perfil exibindo o cargo em vez do papel.
+
+### Segurança
+
+- Cabeçalhos CSP, HSTS em produção, `X-Frame-Options`, `nosniff`,
+  `Referrer-Policy` e `Permissions-Policy`.
+- Rate limit de login, limite de corpo, CORS desligado por padrão e URL oficial
+  autenticada/validada.
+- Testes de acesso cruzado entre técnicos e revogação de sessões.
+
+### Pendente
+
+- Hospedagem compatível com Node 24 e disco persistente.
+- Logos oficiais e revisão de marca.
+- Restrição do Apps Script ao domínio TJMG e revisão de “Executar como”.
+- Captura de acessórios/checklist no rascunho do MVP.
+- Portabilidade do A4 para o console, caso o Apps Script seja descontinuado.
+- Upload de fotos, administração de usuários e testes E2E.
+
 ## [0.7.0] — 2026-10-19
 
 ### Adicionado

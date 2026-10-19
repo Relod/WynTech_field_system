@@ -1,19 +1,23 @@
 # Integração com o gerador oficial do Laudo (Google Apps Script)
 
-**Versão:** 0.7.0 · **Atualizado em:** 19/10/2026
+**Versão:** 0.7.0 (protótipo) · **Atualizado em:** 19/10/2026
 
 Este documento descreve o que foi implementado no protótipo para aproveitar o
 Web App oficial da Wyntech/TJMG, o que o script faz, por que não há uma chamada
 direta de API e qual é o caminho para evoluir para prefill automático.
 
+> Para a integração do **MVP real**, consulte
+> [`producao/10-integracao-gerador.md`](producao/10-integracao-gerador.md).
+> A URL oficial não fica mais hardcoded no repositório.
+
 ## 1. O que é o gerador oficial
 
-O gerador é um Web App publicado em Google Apps Script. A implantação usada no
-protótipo está configurada em:
+O gerador é um Web App publicado em Google Apps Script. No protótipo, o atalho
+lê a URL de `localStorage` para não versionar o deployment:
 
 ```js
 // prototipo/src/app.js
-const OFFICIAL_LAUDO_URL = 'https://script.google.com/macros/s/.../exec';
+const OFFICIAL_LAUDO_URL = localStorage.getItem('wyntech.officialLaudoUrl') || '';
 ```
 
 O formulário oficial:
@@ -228,14 +232,20 @@ recomendada para o protótipo.
   sensível; não o envie por canais informais.
 - O protótipo não persiste nada fora do `localStorage`; o gerador oficial e o
   Drive estão fora do escopo de retenção do protótipo.
-- A URL de implantação está no código. Se o repositório for público, trate a
-  URL como exposta; restrinja/rotacione a implantação conforme a política do
+- A URL de implantação **não** fica versionada. No protótipo, configure
+  `localStorage.wyntech.officialLaudoUrl`; no MVP, use `OFFICIAL_LAUDO_URL` no
+  `.env` do servidor. Restrinja/rotacione a implantação conforme a política do
   TJMG.
+- No MVP, a URL é validada no servidor (`script.google.com/macros/s/.../exec`) e
+  entregue somente após autenticação.
 
 ## 6. Referências
 
-- `prototipo/src/app.js` — constante `OFFICIAL_LAUDO_URL`, funções
+- `prototipo/src/app.js` — `OFFICIAL_LAUDO_URL` via `localStorage`, funções
   `officialDraft()` e `downloadOfficialDraft()`.
-- `scripts/verify-draft.js` — teste do contrato.
+- `public/app.js` — `draftFromChamado()` do MVP real.
+- `scripts/verify-draft.js` — teste do contrato do protótipo e do MVP.
+- [`producao/10-integracao-gerador.md`](producao/10-integracao-gerador.md) —
+  integração vigente.
 - `README.md` — visão geral e instruções de uso.
 - `docs/conformidade-documental.md` — escopo dos documentos.

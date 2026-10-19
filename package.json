@@ -1,8 +1,8 @@
 {
   "name": "wyntech-campo-tjmg",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
-  "description": "Protótipo do console de campo Wyntech TJMG — atendimento, rollout, POP030 e documentos.",
+  "description": "Sistema de campo Wyntech TJMG — API Node.js, SQLite, autenticação, chamados e documentos; protótipo aprovado como referência.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Relod/WynTech_field_system.git"
@@ -10,11 +10,18 @@
   "author": "Wyntech / TJMG",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=18"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "build": "node prototipo/build.js",
     "preview": "node scripts/serve.js",
-    "verify:draft": "node scripts/verify-draft.js"
+    "verify:draft": "node scripts/verify-draft.js",
+    "setup": "node --env-file-if-exists=.env scripts/setup.js",
+    "dev": "node --env-file-if-exists=.env --watch server/index.js",
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate.js",
+    "db:seed": "node --env-file-if-exists=.env scripts/seed.js",
+    "db:reset": "node --env-file-if-exists=.env scripts/reset.js",
+    "test": "node --test --test-concurrency=1"
   }
 }
