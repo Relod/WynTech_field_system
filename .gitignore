@@ -1,0 +1,20 @@
+# Dependências e artefatos locais
+node_modules/
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+*.log
+
+# Perfis e caches de navegadores usados em validação local
+**/profile-*/
+**/.cache/
+**/shots/
+
+# Build temporário
+prototipo/.build/

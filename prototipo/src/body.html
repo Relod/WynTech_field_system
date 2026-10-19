@@ -1,0 +1,1146 @@
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<!-- Sprite de ícones (stroke, sem dependências externas) -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 15 14"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><path d="M9 22v-4h6v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ================= SIDEBAR (desktop) ================= -->
+  <aside class="sidebar" aria-label="Navegação principal">
+    <a class="sidebar-brand" href="#/workspace" aria-label="Wyntech Campo — Painel">
+      <span class="brand-mark" aria-hidden="true">W</span>
+      <span>
+        <span class="brand-name">WYNTECH</span>
+        <span class="brand-sub">Campo TJMG</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Operação</div>
+      <a class="nav-item" href="#/workspace" data-nav="workspace"><svg class="icon"><use href="#i-grid"/></svg>Painel</a>
+      <a class="nav-item" href="#/chamado" data-nav="chamado"><svg class="icon"><use href="#i-plus"/></svg>Novo chamado</a>
+      <a class="nav-item" href="#/equipamento" data-nav="equipamento"><svg class="icon"><use href="#i-monitor"/></svg>Equipamento</a>
+      <a class="nav-item" href="#/fechamento" data-nav="fechamento"><svg class="icon"><use href="#i-clipboard"/></svg>Fechamento IN</a>
+      <a class="nav-item" href="#/rollout" data-nav="rollout"><svg class="icon"><use href="#i-swap"/></svg>Rollout TR</a>
+      <a class="nav-item" href="#/pop030" data-nav="pop030"><svg class="icon"><use href="#i-tool"/></svg>POP030 <span class="nav-count">14</span></a>
+
+      <div class="nav-label">Acervo</div>
+      <a class="nav-item" href="#/documentos" data-nav="documentos"><svg class="icon"><use href="#i-file"/></svg>Documentos</a>
+      <a class="nav-item" href="#/historico" data-nav="historico"><svg class="icon"><use href="#i-history"/></svg>Histórico</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="tech-card">
+        <span class="avatar" aria-hidden="true">RA</span>
+        <span class="tech-info">
+          <strong>Renan Almeida</strong>
+          <span>Analista volante · WYN-1044</span>
+        </span>
+      </div>
+      <div class="sync-state"><span class="sync-dot" aria-hidden="true"></span>Rascunho salvo neste dispositivo</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- ================= TOPBAR (mobile/tablet) ================= -->
+    <header class="topbar">
+      <a class="topbar-brand" href="#/workspace" aria-label="Wyntech Campo — Painel">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span class="topbar-name">WYNTECH</span>
+      </a>
+      <span class="topbar-context" id="topbar-context">Painel</span>
+      <a class="icon-btn" href="#/historico" aria-label="Abrir histórico"><svg class="icon"><use href="#i-history"/></svg></a>
+    </header>
+
+    <main id="main" class="content" tabindex="-1">
+
+      <!-- ============================================================
+           TELA 1 — PAINEL
+           ============================================================ -->
+      <section class="screen" id="screen-workspace" data-screen="workspace" aria-labelledby="workspace-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Painel operacional</div>
+            <h1 id="workspace-title">Atendimentos do dia</h1>
+            <p class="lede">Pará de Minas · quarta-feira, 14 de outubro de 2026. Acompanhe o que está em aberto e retome o atendimento de onde parou.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-primary" href="#/chamado"><svg class="icon"><use href="#i-plus"/></svg>Novo chamado</a>
+          </div>
+        </div>
+
+        <div class="kpi-strip" aria-label="Resumo do dia">
+          <div class="kpi">
+            <div class="kpi-label">Atendimentos hoje</div>
+            <div class="kpi-value" id="kpi-hoje">3</div>
+            <div class="kpi-foot" id="kpi-hoje-foot">2 rollout · 1 incidente</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Pendências</div>
+            <div class="kpi-value" id="kpi-pendentes">2</div>
+            <div class="kpi-foot" id="kpi-pendentes-foot">1 romaneio · 1 termo</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Concluídos</div>
+            <div class="kpi-value" id="kpi-concluidos">1</div>
+            <div class="kpi-foot" id="kpi-concluidos-foot">100% com laudo</div>
+          </div>
+        </div>
+
+        <div class="group-title">Acesso rápido</div>
+        <div class="quick-grid">
+          <a class="quick" href="#/chamado">
+            <span class="quick-icon accent"><svg class="icon"><use href="#i-plus"/></svg></span>
+            <strong>Novo chamado</strong>
+            <span>Abrir IN, TR ou requisição e identificar o equipamento.</span>
+          </a>
+          <a class="quick" href="#/equipamento">
+            <span class="quick-icon blue"><svg class="icon"><use href="#i-monitor"/></svg></span>
+            <strong>Equipamento</strong>
+            <span>Patrimônio, acessórios, checklist técnico e fotos.</span>
+          </a>
+          <a class="quick" href="#/pop030">
+            <span class="quick-icon amber"><svg class="icon"><use href="#i-tool"/></svg></span>
+            <strong>POP030</strong>
+            <span>Script padronizado para as 14 situações de campo.</span>
+          </a>
+          <a class="quick" href="#/documentos">
+            <span class="quick-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+            <strong>Documentos</strong>
+            <span>Laudo, rollout e romaneio prontos para imprimir.</span>
+          </a>
+        </div>
+
+        <div class="split mt-24">
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Atendimentos recentes</h2>
+                <a class="hint" href="#/historico">Ver histórico</a>
+              </div>
+              <div class="record-list" id="recent-list"></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Pendências de processo</h2>
+                <span class="badge badge-amber">2 abertas</span>
+              </div>
+              <div class="panel-body tight">
+                <div class="stack-sm">
+                  <div class="callout callout-warn">
+                    <svg class="icon"><use href="#i-alert"/></svg>
+                    <div><strong>Romaneio do TR1185398</strong><br>O documento foi visualizado, mas ainda não foi impresso e anexado à tarefa.</div>
+                  </div>
+                  <div class="callout callout-info">
+                    <svg class="icon"><use href="#i-info"/></svg>
+                    <div><strong>Termo de Substituição</strong><br>Documento externo do TJMG. Só vale com a assinatura do Magistrado.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Lembretes de campo</h2>
+              </div>
+              <div class="panel-body tight">
+                <div class="stack-sm">
+                  <div class="callout callout-success">
+                    <svg class="icon"><use href="#i-shield"/></svg>
+                    <div><strong>RAT sempre assinado</strong><br>Confira o RAT do HP antes de encerrar o atendimento.</div>
+                  </div>
+                  <div class="callout">
+                    <svg class="icon"><use href="#i-wifi"/></svg>
+                    <div><strong>Operação offline</strong><br>O rascunho permanece neste dispositivo até a sincronização.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 2 — NOVO CHAMADO
+           ============================================================ -->
+      <section class="screen" id="screen-chamado" data-screen="chamado" aria-labelledby="chamado-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Atendimento · etapa 1 de 3</div>
+            <h1 id="chamado-title">Abrir chamado</h1>
+            <p class="lede">Identifique o atendimento do HP e o local. Os dados alimentam o laudo, o rollout e o romaneio.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/workspace"><svg class="icon"><use href="#i-arrow-left"/></svg>Painel</a>
+          </div>
+        </div>
+
+        <nav class="stepper" aria-label="Etapas do atendimento">
+          <div class="step is-active">
+            <span class="step-dot" aria-current="step">1</span>
+            <span class="step-label"><strong>Chamado</strong><span>Identificação HP</span></span>
+          </div>
+          <div class="step">
+            <span class="step-dot">2</span>
+            <span class="step-label"><strong>Equipamento</strong><span>Checklist e fotos</span></span>
+          </div>
+          <div class="step">
+            <span class="step-dot">3</span>
+            <span class="step-label"><strong>Fechamento</strong><span>IN ou rollout</span></span>
+          </div>
+        </nav>
+
+        <div class="split">
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Identificação HP</h2>
+                <span class="badge badge-mono">Rascunho</span>
+              </div>
+              <div class="panel-body">
+                <div class="form-grid">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="label" for="f-os">Ordem de serviço <span class="req">*</span></label>
+                      <input class="input mono-input" id="f-os" data-bind="os" autocomplete="off" placeholder="TR0000000">
+                      <span class="field-error">Informe a OS.</span>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="f-ch">Chamado HP <span class="opt">opcional</span></label>
+                      <input class="input mono-input" id="f-ch" data-bind="ch" autocomplete="off" placeholder="CH0000000">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <span class="label">Tipo de atendimento <span class="req">*</span></span>
+                    <div class="type-grid" role="group" aria-label="Tipo de atendimento">
+                      <button type="button" class="type-option" data-tipo="IN" aria-pressed="false">
+                        <span class="code">IN</span><span class="name">Incidente</span>
+                      </button>
+                      <button type="button" class="type-option" data-tipo="TR" aria-pressed="false">
+                        <span class="code">TR</span><span class="name">Rollout</span>
+                      </button>
+                      <button type="button" class="type-option" data-tipo="REQ" aria-pressed="false">
+                        <span class="code">REQ</span><span class="name">Requisição</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Local e contato</h2></div>
+              <div class="panel-body">
+                <div class="form-grid">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="label" for="f-comarca">Comarca <span class="req">*</span></label>
+                      <select class="select" id="f-comarca" data-bind="comarca">
+                        <option>Pará de Minas</option>
+                        <option>Divinópolis</option>
+                        <option>Itaúna</option>
+                        <option>Formiga</option>
+                        <option>Nova Serrana</option>
+                        <option>Belo Horizonte</option>
+                      </select>
+                      <span class="field-error">Selecione a comarca.</span>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="f-setor">Setor / unidade <span class="req">*</span></label>
+                      <input class="input" id="f-setor" data-bind="setor" autocomplete="off" placeholder="Ex.: Vara Cível — Gabinete">
+                      <span class="field-error">Informe o setor.</span>
+                    </div>
+                  </div>
+
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="label" for="f-contato">Pessoa de contato</label>
+                      <input class="input" id="f-contato" data-bind="contato" autocomplete="off" placeholder="Nome de quem recebe o atendimento">
+                    </div>
+                    <div class="field">
+                      <label class="label" for="f-telefone">Telefone</label>
+                      <input class="input" id="f-telefone" data-bind="telefone" inputmode="tel" autocomplete="off" placeholder="(00) 00000-0000">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="f-defeito">Motivo / solicitação</label>
+                    <textarea class="textarea" id="f-defeito" data-bind="defeito" placeholder="Descreva o problema relatado ou a solicitação do setor."></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-foot">
+                <span class="hint-text"><svg class="icon icon-sm" style="display:inline-block;vertical-align:-2px"><use href="#i-save"/></svg> Salvo automaticamente neste dispositivo</span>
+                <button class="btn btn-primary" type="button" data-action="go-equipamento">Continuar<svg class="icon"><use href="#i-arrow-right"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="stack" aria-label="Resumo do chamado">
+            <div class="panel">
+              <div class="panel-head"><h2>Resumo</h2><span class="badge badge-mono" id="sum-status">Rascunho</span></div>
+              <div class="panel-body">
+                <div class="stack-sm">
+                  <div class="field-row" style="gap:10px">
+                    <div><span class="hint-text">Ordem de serviço</span><div class="mono" id="sum-os" style="font-weight:700;font-size:14px">—</div></div>
+                    <div><span class="hint-text">Tipo</span><div id="sum-tipo" style="font-weight:650;font-size:14px">—</div></div>
+                  </div>
+                  <div><span class="hint-text">Comarca</span><div id="sum-comarca" style="font-weight:600;font-size:13px">—</div></div>
+                  <div><span class="hint-text">Setor</span><div id="sum-setor" style="font-weight:600;font-size:13px">—</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout callout-info">
+              <svg class="icon"><use href="#i-info"/></svg>
+              <div><strong>Documentos vinculados</strong><br>O laudo e o romaneio usam a OS, a comarca, o setor e os patrimônios informados neste atendimento.</div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Próximo passo</h2></div>
+              <div class="panel-body">
+                <p class="hint-text" style="margin-bottom:12px">Confira os dados e siga para a identificação do equipamento. Você poderá voltar e editar depois.</p>
+                <button class="btn btn-primary btn-block" type="button" data-action="go-equipamento">Ir para equipamento<svg class="icon"><use href="#i-arrow-right"/></svg></button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 3 — EQUIPAMENTO
+           ============================================================ -->
+      <section class="screen" id="screen-equipamento" data-screen="equipamento" aria-labelledby="equip-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Atendimento · etapa 2 de 3</div>
+            <h1 id="equip-title">Equipamento</h1>
+            <p class="lede">Registre o patrimônio, os acessórios e o checklist técnico. As fotos ficam apenas nesta sessão do protótipo.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/chamado"><svg class="icon"><use href="#i-arrow-left"/></svg>Chamado</a>
+          </div>
+        </div>
+
+        <nav class="stepper" aria-label="Etapas do atendimento">
+          <div class="step is-done">
+            <span class="step-dot"><svg class="icon icon-sm"><use href="#i-check"/></svg></span>
+            <span class="step-label"><strong>Chamado</strong><span>Identificação HP</span></span>
+          </div>
+          <div class="step is-active">
+            <span class="step-dot" aria-current="step">2</span>
+            <span class="step-label"><strong>Equipamento</strong><span>Checklist e fotos</span></span>
+          </div>
+          <div class="step">
+            <span class="step-dot">3</span>
+            <span class="step-label"><strong>Fechamento</strong><span>IN ou rollout</span></span>
+          </div>
+        </nav>
+
+        <div class="grid grid-2">
+          <div class="panel">
+            <div class="panel-head"><h2>Identificação do equipamento</h2><span class="badge badge-mono" id="equip-patr-badge">—</span></div>
+            <div class="panel-body">
+              <div class="form-grid">
+                <div class="field">
+                  <label class="label" for="f-patr-s">Patrimônio <span class="req">*</span></label>
+                  <div class="input-group">
+                    <input class="input mono-input" id="f-patr-s" data-bind="patrS" inputmode="numeric" autocomplete="off" placeholder="000000000">
+                    <button class="btn btn-secondary" type="button" data-action="consultar-siad"><svg class="icon"><use href="#i-search"/></svg>SIAD</button>
+                  </div>
+                  <span class="field-error">Informe o patrimônio.</span>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="f-serial-s">Número de série</label>
+                    <input class="input mono-input" id="f-serial-s" data-bind="serialS" autocomplete="off">
+                  </div>
+                  <div class="field">
+                    <label class="label" for="f-fab-s">Fabricante</label>
+                    <input class="input" id="f-fab-s" data-bind="fabricanteRetirado" autocomplete="off">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="f-modelo-s">Modelo / descrição</label>
+                  <input class="input" id="f-modelo-s" data-bind="modeloRetirado" autocomplete="off">
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="f-mov">Movimentação</label>
+                    <select class="select" id="f-mov" data-bind="movimentacao">
+                      <option value="DEVOLUCAO">Devolução / recolhimento</option>
+                      <option value="MANUTENCAO">Manutenção no local</option>
+                      <option value="EMPRESTIMO">Empréstimo</option>
+                      <option value="REMANEJAMENTO">Remanejamento</option>
+                      <option value="INSTALACAO">Instalação</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="f-local-verif">Local de verificação</label>
+                    <input class="input" id="f-local-verif" data-bind="localVerif" autocomplete="off">
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="f-local-ret">Local de retirada</label>
+                    <input class="input" id="f-local-ret" data-bind="localRetirada" autocomplete="off">
+                  </div>
+                  <div class="field">
+                    <label class="label" for="f-local-ent">Local de entrega</label>
+                    <input class="input" id="f-local-ent" data-bind="localEntrega" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Acessórios e avarias</h2></div>
+            <div class="panel-body">
+              <div class="form-grid">
+                <div class="field">
+                  <span class="label">Acessórios entregues</span>
+                  <div class="chip-row" id="acc-chips">
+                    <button type="button" class="chip" data-acc="Cabo de energia">Cabo de energia</button>
+                    <button type="button" class="chip" data-acc="Fonte / carregador">Fonte / carregador</button>
+                    <button type="button" class="chip" data-acc="Mouse">Mouse</button>
+                    <button type="button" class="chip" data-acc="Teclado">Teclado</button>
+                    <button type="button" class="chip" data-acc="Webcam">Webcam</button>
+                    <button type="button" class="chip" data-acc="Dock station">Dock station</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="f-outros">Outros acessórios</label>
+                  <input class="input" id="f-outros" data-bind="outros" autocomplete="off" placeholder="Ex.: pasta de transporte, cabo HDMI">
+                </div>
+
+                <div class="field">
+                  <span class="label">Possui avaria aparente?</span>
+                  <div class="seg" role="group" aria-label="Avaria aparente">
+                    <button type="button" data-avaria="0" aria-pressed="true">Não</button>
+                    <button type="button" data-avaria="1" aria-pressed="false">Sim</button>
+                  </div>
+                </div>
+
+                <div class="field" id="avaria-wrap" hidden>
+                  <label class="label" for="f-avaria-desc">Descrição da avaria</label>
+                  <textarea class="textarea" id="f-avaria-desc" data-bind="avariaDesc" style="min-height:70px" placeholder="Descreva riscos, trincas, amassados ou peças faltantes."></textarea>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="f-obs">Observações</label>
+                  <textarea class="textarea" id="f-obs" data-bind="obs" style="min-height:80px"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel mt-16">
+          <div class="panel-head">
+            <h2>Checklist técnico</h2>
+            <span class="hint">B = bom · R = ressalva · X = não conforme</span>
+          </div>
+          <div class="panel-body">
+            <div class="check-list" id="checklist">
+              <div class="check-row" data-check="1">
+                <div class="check-row-label"><span class="idx">01</span>Equipamento liga e inicializa o sistema operacional</div>
+                <div class="grade-group" role="group" aria-label="Item 1">
+                  <button type="button" class="grade" data-grade="1" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="1" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="1" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+              <div class="check-row" data-check="2">
+                <div class="check-row-label"><span class="idx">02</span>Aplicativos essenciais e perfis de usuário disponíveis</div>
+                <div class="grade-group" role="group" aria-label="Item 2">
+                  <button type="button" class="grade" data-grade="2" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="2" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="2" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+              <div class="check-row" data-check="3">
+                <div class="check-row-label"><span class="idx">03</span>Conectividade de rede e acesso aos sistemas corporativos</div>
+                <div class="grade-group" role="group" aria-label="Item 3">
+                  <button type="button" class="grade" data-grade="3" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="3" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="3" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+              <div class="check-row" data-check="4">
+                <div class="check-row-label"><span class="idx">04</span>Periféricos testados: teclado, mouse, monitor e áudio</div>
+                <div class="grade-group" role="group" aria-label="Item 4">
+                  <button type="button" class="grade" data-grade="4" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="4" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="4" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+              <div class="check-row" data-check="5">
+                <div class="check-row-label"><span class="idx">05</span>Integridade física, limpeza e conservação do equipamento</div>
+                <div class="grade-group" role="group" aria-label="Item 5">
+                  <button type="button" class="grade" data-grade="5" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="5" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="5" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+              <div class="check-row" data-check="6">
+                <div class="check-row-label"><span class="idx">06</span>RAT do HP conferido, impresso e assinado pelo usuário</div>
+                <div class="grade-group" role="group" aria-label="Item 6">
+                  <button type="button" class="grade" data-grade="6" data-value="B" title="Bom">B</button>
+                  <button type="button" class="grade" data-grade="6" data-value="R" title="Ressalva">R</button>
+                  <button type="button" class="grade" data-grade="6" data-value="X" title="Não conforme">X</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt-16">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Fotos do equipamento</h2>
+              <span class="hint">Máx. 6 · prévia local</span>
+            </div>
+            <div class="panel-body">
+              <input type="file" id="photo-input" accept="image/*" multiple hidden>
+              <div class="photo-grid" id="photo-grid" style="margin-bottom:10px"></div>
+              <button class="btn btn-secondary btn-block" type="button" data-action="add-photo">
+                <svg class="icon"><use href="#i-camera"/></svg>Adicionar foto
+              </button>
+              <p class="hint-text" style="margin-top:8px">As imagens não são enviadas nem persistidas neste protótipo. No sistema final, a compressão e o upload ocorrem no fechamento.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Fechamento</h2></div>
+            <div class="panel-body">
+              <p class="hint-text" style="margin-bottom:12px">Escolha o fluxo conforme o tipo do atendimento. O tipo atual é <strong id="equip-tipo-label">—</strong>.</p>
+              <div class="btn-row">
+                <a class="btn btn-primary" href="#/rollout" data-action="go-rollout"><svg class="icon"><use href="#i-swap"/></svg>Rollout TR</a>
+                <a class="btn btn-secondary" href="#/fechamento" data-action="go-fechamento"><svg class="icon"><use href="#i-clipboard"/></svg>Fechamento IN</a>
+              </div>
+              <div class="callout callout-info" style="margin-top:14px">
+                <svg class="icon"><use href="#i-info"/></svg>
+                <div>O checklist é o mesmo para IN e TR. O que muda é o documento de fechamento e a conferência do termo externo.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 4 — FECHAMENTO IN
+           ============================================================ -->
+      <section class="screen" id="screen-fechamento" data-screen="fechamento" aria-labelledby="fechamento-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Atendimento · etapa 3 de 3</div>
+            <h1 id="fechamento-title">Fechamento IN</h1>
+            <p class="lede">Gere o texto padronizado para o HP, registre a peça e conclua as rotinas administrativas do incidente.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/equipamento"><svg class="icon"><use href="#i-arrow-left"/></svg>Equipamento</a>
+          </div>
+        </div>
+
+        <nav class="stepper" aria-label="Etapas do atendimento">
+          <div class="step is-done"><span class="step-dot"><svg class="icon icon-sm"><use href="#i-check"/></svg></span><span class="step-label"><strong>Chamado</strong><span>Identificação HP</span></span></div>
+          <div class="step is-done"><span class="step-dot"><svg class="icon icon-sm"><use href="#i-check"/></svg></span><span class="step-label"><strong>Equipamento</strong><span>Checklist e fotos</span></span></div>
+          <div class="step is-active"><span class="step-dot" aria-current="step">3</span><span class="step-label"><strong>Fechamento</strong><span>IN ou rollout</span></span></div>
+        </nav>
+
+        <div class="section-title">
+          <div class="seg" role="group" aria-label="Tipo de fechamento">
+            <a href="#/fechamento" class="is-on" aria-current="page"><svg class="icon"><use href="#i-clipboard"/></svg>Incidente (IN)</a>
+            <a href="#/rollout"><svg class="icon"><use href="#i-swap"/></svg>Rollout (TR)</a>
+          </div>
+          <span class="hint">O fechamento não substitui o RAT do HP.</span>
+        </div>
+
+        <div class="split-wide">
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head"><h2>Dados do fechamento</h2><span class="badge badge-mono" id="in-os-badge">—</span></div>
+              <div class="panel-body">
+                <div class="form-grid">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="label" for="f-cod">Código de fechamento HP</label>
+                      <select class="select" id="f-cod" data-bind="codFechamento">
+                        <option value="IN0028">IN0028 — Substituição de equipamento</option>
+                        <option value="IN0031">IN0031 — Manutenção corretiva</option>
+                        <option value="IN0042">IN0042 — Recolhimento / devolução</option>
+                        <option value="IN0055">IN0055 — Instalação de ponto</option>
+                        <option value="IN0063">IN0063 — Remanejamento</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="f-peca">Peça / equipamento aplicado</label>
+                      <select class="select" id="f-peca" data-bind="peca">
+                        <option>Não se aplica</option>
+                        <option>Notebook Lenovo ThinkPad L14</option>
+                        <option>Monitor LG 24"</option>
+                        <option>Fonte / carregador</option>
+                        <option>Cabo de rede</option>
+                        <option>Teclado e mouse</option>
+                        <option>Peça de estoque — detalhar no parecer</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <span class="label">Ações realizadas</span>
+                    <div class="chip-row" id="tech-actions">
+                      <button type="button" class="chip" data-tech="Diagnóstico">Diagnóstico</button>
+                      <button type="button" class="chip" data-tech="Substituição">Substituição</button>
+                      <button type="button" class="chip" data-tech="Configuração">Configuração</button>
+                      <button type="button" class="chip" data-tech="Teste de rede">Teste de rede</button>
+                      <button type="button" class="chip" data-tech="Instalação de software">Instalação de software</button>
+                      <button type="button" class="chip" data-tech="Orientação ao usuário">Orientação ao usuário</button>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label class="label" for="f-parecer">Parecer técnico</label>
+                    <textarea class="textarea" id="f-parecer" data-bind="parecer" style="min-height:110px"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Rotinas administrativas</h2><span class="hint">Use somente quando aplicável</span></div>
+              <div class="panel-body">
+                <details class="details">
+                  <summary><svg class="icon"><use href="#i-building"/></svg>Transferência patrimonial (RN07)<svg class="icon chev"><use href="#i-chevron"/></svg></summary>
+                  <div class="details-body">
+                    <div class="callout callout-warn" style="margin-bottom:10px">
+                      <svg class="icon"><use href="#i-alert"/></svg>
+                      <div>Anexe <strong>somente o Romaneio</strong> na tarefa de transferência. Não anexe laudo, RAT ou termo.</div>
+                    </div>
+                    <div class="copy-block">
+                      <div class="copy-head"><span class="copy-title">Texto da tarefa</span><button class="btn-copy" type="button" data-action="copy" data-copy="#transf-patri-text"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button></div>
+                      <pre class="copy-text" id="transf-patri-text"></pre>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="details">
+                  <summary><svg class="icon"><use href="#i-shield"/></svg>Caso fortuito (RN13)<svg class="icon chev"><use href="#i-chevron"/></svg></summary>
+                  <div class="details-body">
+                    <p class="hint-text" style="margin-bottom:10px">Use quando houver dano por causa externa, sem nexo com o uso normal. Registre a descrição e as evidências.</p>
+                    <div class="copy-block">
+                      <div class="copy-head"><span class="copy-title">Registro do caso fortuito</span><button class="btn-copy" type="button" data-action="copy" data-copy="#caso-fortuito-text"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button></div>
+                      <pre class="copy-text" id="caso-fortuito-text"></pre>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="details">
+                  <summary><svg class="icon"><use href="#i-mail"/></svg>Compra emergencial (RN14)<svg class="icon chev"><use href="#i-chevron"/></svg></summary>
+                  <div class="details-body">
+                    <div class="callout callout-info" style="margin-bottom:10px">
+                      <svg class="icon"><use href="#i-info"/></svg>
+                      <div>Envie a solicitação ao gestor com a peça, a OS e a justificativa técnica. A compra só ocorre após aprovação.</div>
+                    </div>
+                    <div class="copy-block">
+                      <div class="copy-head"><span class="copy-title">E-mail de solicitação</span><button class="btn-copy" type="button" data-action="copy" data-copy="#pedido-compra-text"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button></div>
+                      <pre class="copy-text" id="pedido-compra-text"></pre>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <aside class="stack" aria-label="Texto para o HP">
+            <div class="panel">
+              <div class="panel-head"><h2>Texto para o HP</h2><span class="badge badge-green">Gerado</span></div>
+              <div class="panel-body">
+                <div class="copy-block">
+                  <div class="copy-head">
+                    <span class="copy-title">Fechamento IN</span>
+                    <button class="btn-copy" type="button" data-action="copy" data-copy="#hp-in-text"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button>
+                  </div>
+                  <pre class="copy-text is-tall" id="hp-in-text"></pre>
+                </div>
+                <div class="callout callout-warn" style="margin-top:12px">
+                  <svg class="icon"><use href="#i-alert"/></svg>
+                  <div>Antes de concluir, confirme o RAT assinado e anexe o Romaneio na tarefa correspondente.</div>
+                </div>
+              </div>
+              <div class="panel-foot">
+                <a class="btn btn-secondary" href="#/documentos"><svg class="icon"><use href="#i-file"/></svg>Documentos</a>
+                <a class="btn btn-primary" href="#/documentos"><svg class="icon"><use href="#i-check"/></svg>Concluir</a>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Conferência rápida</h2></div>
+              <div class="panel-body tight">
+                <div class="stack-sm">
+                  <div class="callout callout-success" id="check-checklist"><svg class="icon"><use href="#i-check"/></svg><div>Checklist técnico preenchido</div></div>
+                  <div class="callout callout-success" id="check-photos"><svg class="icon"><use href="#i-check"/></svg><div>Fotos do equipamento registradas</div></div>
+                  <div class="callout callout-warn" id="check-romaneio"><svg class="icon"><use href="#i-alert"/></svg><div>Romaneio pendente de anexo</div></div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 5 — ROLLOUT TR
+           ============================================================ -->
+      <section class="screen" id="screen-rollout" data-screen="rollout" aria-labelledby="rollout-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Atendimento · etapa 3 de 3</div>
+            <h1 id="rollout-title">Rollout TR</h1>
+            <p class="lede">Confira a substituição, conclua o checklist documental e gere a mensagem padronizada para o HP.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/equipamento"><svg class="icon"><use href="#i-arrow-left"/></svg>Equipamento</a>
+          </div>
+        </div>
+
+        <nav class="stepper" aria-label="Etapas do atendimento">
+          <div class="step is-done"><span class="step-dot"><svg class="icon icon-sm"><use href="#i-check"/></svg></span><span class="step-label"><strong>Chamado</strong><span>Identificação HP</span></span></div>
+          <div class="step is-done"><span class="step-dot"><svg class="icon icon-sm"><use href="#i-check"/></svg></span><span class="step-label"><strong>Equipamento</strong><span>Checklist e fotos</span></span></div>
+          <div class="step is-active"><span class="step-dot" aria-current="step">3</span><span class="step-label"><strong>Rollout</strong><span>Documentos e HP</span></span></div>
+        </nav>
+
+        <div class="section-title">
+          <div class="seg" role="group" aria-label="Tipo de fechamento">
+            <a href="#/fechamento"><svg class="icon"><use href="#i-clipboard"/></svg>Incidente (IN)</a>
+            <a href="#/rollout" class="is-on" aria-current="page"><svg class="icon"><use href="#i-swap"/></svg>Rollout (TR)</a>
+          </div>
+          <span class="hint">A TR só é concluída com o termo externo assinado.</span>
+        </div>
+
+        <div class="split-wide">
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Substituição</h2>
+                <a class="hint" href="#/equipamento">Editar dados</a>
+              </div>
+              <div class="panel-body">
+                <div class="swap-grid">
+                  <div class="swap out">
+                    <div class="swap-label">Sai · equipamento substituído</div>
+                    <div class="swap-patr" id="rollout-patr-s">—</div>
+                    <div class="swap-desc"><strong id="rollout-model-s">—</strong><br>Série <span class="mono" id="rollout-serial-s">—</span></div>
+                  </div>
+                  <div class="swap in">
+                    <div class="swap-label">Entra · equipamento instalado</div>
+                    <div class="swap-patr" id="rollout-patr-i">—</div>
+                    <div class="swap-desc"><strong id="rollout-model-i">—</strong><br>Série <span class="mono" id="rollout-serial-i">—</span></div>
+                  </div>
+                </div>
+                <div class="hint-text" style="margin-top:10px">Usuário: <strong id="rollout-user">—</strong> · Setor: <strong id="rollout-setor">—</strong> · Comarca: <strong id="rollout-comarca">—</strong></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h2>Checklist do rollout</h2>
+                <span class="hint" id="rollout-progress-label">0 de 6</span>
+              </div>
+              <div class="panel-body">
+                <div class="progress" aria-hidden="true"><span id="rollout-progress" style="width:0%"></span></div>
+                <div class="task-list" style="margin-top:8px">
+                  <div class="task" data-task="guia" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">Guia de transporte assinada <span class="task-tag accent">Wyntech gera</span><span class="task-tag">Físico</span></div><div class="task-desc">Conferir assinatura e anexar à tarefa de transferência.</div></div>
+                  </div>
+                  <div class="task" data-task="rat" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">RAT do HP <span class="task-tag accent">Wyntech gera</span></div><div class="task-desc">Impresso, conferido e assinado pelo usuário no local.</div></div>
+                  </div>
+                  <div class="task" data-task="foto" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">Foto do equipamento <span class="task-tag accent">Wyntech gera</span></div><div class="task-desc">Registro visual do equipamento retirado e do instalado.</div></div>
+                  </div>
+                  <div class="task" data-task="laudo" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">Laudo Técnico <span class="task-tag accent">Wyntech gera</span></div><div class="task-desc">Visualizar, imprimir e colher as assinaturas.</div></div>
+                  </div>
+                  <div class="task" data-task="termo" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">Termo de Substituição <span class="task-tag amber">TJMG</span><span class="task-tag red">Magistrado</span></div><div class="task-desc">Documento externo. A TR não é válida sem a assinatura do Magistrado.</div></div>
+                  </div>
+                  <div class="task" data-task="romaneio" role="checkbox" aria-checked="false" tabindex="0">
+                    <span class="task-box"><svg class="icon"><use href="#i-check"/></svg></span>
+                    <div><div class="task-title">Romaneio <span class="task-tag accent">Wyntech gera</span></div><div class="task-desc">Anexar somente o romaneio na tarefa de transferência patrimonial.</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="stack" aria-label="Mensagem do rollout">
+            <div class="panel">
+              <div class="panel-head"><h2>Mensagem para o HP</h2><span class="badge badge-green">Gerado</span></div>
+              <div class="panel-body">
+                <div class="copy-block">
+                  <div class="copy-head">
+                    <span class="copy-title">Rollout TR</span>
+                    <button class="btn-copy" type="button" data-action="copy" data-copy="#rollout-msg-text"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button>
+                  </div>
+                  <pre class="copy-text is-tall" id="rollout-msg-text"></pre>
+                </div>
+                <div class="callout callout-info" style="margin-top:12px">
+                  <svg class="icon"><use href="#i-info"/></svg>
+                  <div>O texto é gerado a partir dos dados do atendimento. Revise antes de colar no HP.</div>
+                </div>
+              </div>
+              <div class="panel-foot">
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-rollout" data-mode="filled" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Laudo</button>
+                <button class="btn btn-primary" type="button" data-action="doc" data-doc="romaneio" data-mode="filled" data-view="view"><svg class="icon"><use href="#i-clipboard"/></svg>Romaneio</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Antes de encerrar</h2></div>
+              <div class="panel-body tight">
+                <div class="stack-sm">
+                  <div class="callout callout-warn"><svg class="icon"><use href="#i-alert"/></svg><div>Termo de Substituição assinado pelo Magistrado.</div></div>
+                  <div class="callout callout-info"><svg class="icon"><use href="#i-info"/></svg><div>Romaneio anexado na transferência patrimonial.</div></div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 6 — POP030
+           ============================================================ -->
+      <section class="screen" id="screen-pop030" data-screen="pop030" aria-labelledby="pop-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Ferramenta de campo</div>
+            <h1 id="pop-title">POP030</h1>
+            <p class="lede">Escolha a situação, preencha os dados e gere o script padronizado. São 14 situações operacionais disponíveis.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/documentos"><svg class="icon"><use href="#i-file"/></svg>Documentos</a>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Contexto do atendimento</h2>
+            <button class="btn btn-secondary btn-sm" type="button" data-action="sync-pop"><svg class="icon"><use href="#i-refresh"/></svg>Sincronizar com o chamado</button>
+          </div>
+          <div class="panel-body tight">
+            <div class="grid grid-4" style="gap:12px">
+              <div><span class="hint-text">Ordem de serviço</span><div class="mono" id="pop-context-os" style="font-weight:700;font-size:12.5px">—</div></div>
+              <div><span class="hint-text">Comarca</span><div id="pop-context-comarca" style="font-weight:600;font-size:12.5px">—</div></div>
+              <div><span class="hint-text">Patrimônios S / I</span><div class="mono" id="pop-context-patr" style="font-weight:600;font-size:12px">—</div></div>
+              <div><span class="hint-text">Usuário / setor</span><div id="pop-context-user" style="font-weight:600;font-size:12px;white-space:normal;line-height:1.35">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-wide mt-16">
+          <div class="panel">
+            <div class="panel-head"><h2>Situação e dados</h2><span class="badge badge-mono">14 situações</span></div>
+            <div class="panel-body">
+              <div class="form-grid">
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="pop-sit">Situação</label>
+                    <select class="select" id="pop-sit"></select>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="pop-sub">Subtipo</label>
+                    <select class="select" id="pop-sub"></select>
+                  </div>
+                </div>
+                <div id="pop-fields" class="form-grid pop-fields"></div>
+              </div>
+            </div>
+            <div class="panel-foot">
+              <span class="hint-text">Campos sincronizados com o chamado quando possível.</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-action="sync-pop"><svg class="icon"><use href="#i-refresh"/></svg>Sincronizar</button>
+            </div>
+          </div>
+
+          <aside class="stack" aria-label="Script do POP030">
+            <div class="panel">
+              <div class="panel-head"><h2>Script para o HP</h2><span class="badge badge-green">Gerado</span></div>
+              <div class="panel-body">
+                <div class="copy-block">
+                  <div class="copy-head">
+                    <span class="copy-title">POP030</span>
+                    <button class="btn-copy" type="button" data-action="copy" data-copy="#pop-script"><svg class="icon"><use href="#i-copy"/></svg>Copiar</button>
+                  </div>
+                  <pre class="copy-text is-tall" id="pop-script"></pre>
+                </div>
+                <div class="btn-row mt-16">
+                  <button class="btn btn-secondary" type="button" data-action="share-pop"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</button>
+                  <button class="btn btn-primary" type="button" data-action="copy" data-copy="#pop-script"><svg class="icon"><use href="#i-copy"/></svg>Copiar script</button>
+                </div>
+                <div class="callout callout-info" style="margin-top:12px">
+                  <svg class="icon"><use href="#i-info"/></svg>
+                  <div>O POP030 não gera documento. Ele produz apenas o texto de atendimento para o HP.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h2>Boas práticas</h2></div>
+              <div class="panel-body tight">
+                <div class="stack-sm">
+                  <div class="callout"><svg class="icon"><use href="#i-check"/></svg><div>Confira patrimônios, usuário e setor antes de copiar.</div></div>
+                  <div class="callout"><svg class="icon"><use href="#i-alert"/></svg><div>Não use o POP030 para justificar dano por caso fortuito. Use a RN13.</div></div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 7 — DOCUMENTOS
+           ============================================================ -->
+      <section class="screen" id="screen-documentos" data-screen="documentos" aria-labelledby="docs-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Acervo documental</div>
+            <h1 id="docs-title">Documentos</h1>
+            <p class="lede">Três documentos são gerados pela Wyntech. Visualize, imprima, salve em PDF ou compartilhe o resumo no WhatsApp.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-secondary" href="#/chamado"><svg class="icon"><use href="#i-arrow-left"/></svg>Editar chamado</a>
+          </div>
+        </div>
+
+        <div class="callout callout-info" style="margin-bottom:16px">
+          <svg class="icon"><use href="#i-info"/></svg>
+          <div><strong>Escopo documental.</strong> A Wyntech gera o Laudo Técnico Unificado v5.0, o Laudo de Rollout e o Romaneio. RAT, Guia de Transporte e Termo de Substituição são documentos externos do HP/TJMG e não são gerados por este sistema.</div>
+        </div>
+
+        <div class="doc-grid">
+          <article class="doc-card">
+            <div class="doc-card-head">
+              <div class="doc-kicker">PRINT 02 · v5.0</div>
+              <h3>Laudo Técnico Unificado</h3>
+              <p>Movimentação e verificação de equipamentos. Serve para manutenção, devolução, estoque e rollout.</p>
+            </div>
+            <div class="doc-card-body">
+              <div class="doc-actions">
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-normal" data-mode="filled" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Visualizar</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-normal" data-mode="filled" data-view="print"><svg class="icon"><use href="#i-printer"/></svg>Imprimir</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-normal" data-mode="filled" data-view="whatsapp"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</button>
+                <button class="btn btn-ghost" type="button" data-action="doc" data-doc="laudo-normal" data-mode="blank" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Em branco</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="doc-card">
+            <div class="doc-card-head">
+              <div class="doc-kicker">TR · v5.0</div>
+              <h3>Laudo de Rollout</h3>
+              <p>Laudo do equipamento substituído, com destino ao estoque da Sala Polo Divinópolis.</p>
+            </div>
+            <div class="doc-card-body">
+              <div class="doc-actions">
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-rollout" data-mode="filled" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Visualizar</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-rollout" data-mode="filled" data-view="print"><svg class="icon"><use href="#i-printer"/></svg>Imprimir</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="laudo-rollout" data-mode="filled" data-view="whatsapp"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</button>
+                <button class="btn btn-ghost" type="button" data-action="doc" data-doc="laudo-rollout" data-mode="blank" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Em branco</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="doc-card">
+            <div class="doc-card-head">
+              <div class="doc-kicker">PRINT 03 · v5.0</div>
+              <h3>Romaneio</h3>
+              <p>Relação de equipamentos retirados e instalados. Obrigatório na transferência patrimonial.</p>
+            </div>
+            <div class="doc-card-body">
+              <div class="doc-actions">
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="romaneio" data-mode="filled" data-view="view"><svg class="icon"><use href="#i-clipboard"/></svg>Visualizar</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="romaneio" data-mode="filled" data-view="print"><svg class="icon"><use href="#i-printer"/></svg>Imprimir</button>
+                <button class="btn btn-secondary" type="button" data-action="doc" data-doc="romaneio" data-mode="filled" data-view="whatsapp"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</button>
+                <button class="btn btn-ghost" type="button" data-action="doc" data-doc="romaneio" data-mode="blank" data-view="view"><svg class="icon"><use href="#i-file"/></svg>Em branco</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="panel mt-16">
+          <div class="panel-head">
+            <h2>Gerador oficial do Laudo</h2>
+            <span class="badge badge-green">SIAD + PDF</span>
+          </div>
+          <div class="panel-body">
+            <p class="official-copy">O gerador oficial consulta o SIAD pelo patrimônio e baixa o PDF pronto. Baixe o rascunho deste atendimento e importe no gerador em <strong>Abrir rascunho</strong>.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" id="official-open" href="#" target="_blank" rel="noopener"><svg class="icon"><use href="#i-external"/></svg>Abrir gerador oficial</a>
+              <button class="btn btn-secondary" type="button" data-action="official-draft" data-doc-type="laudo-normal"><svg class="icon"><use href="#i-save"/></svg>Rascunho do laudo</button>
+              <button class="btn btn-secondary" type="button" data-action="official-draft" data-doc-type="laudo-rollout"><svg class="icon"><use href="#i-save"/></svg>Rascunho do rollout</button>
+            </div>
+            <p class="official-note">O gerador é externo (Google Apps Script) e exige internet. O PDF local continua disponível offline.</p>
+          </div>
+        </div>
+
+        <div class="panel mt-16">
+          <div class="panel-head"><h2>Dados usados nos documentos</h2><a class="hint" href="#/chamado">Editar chamado</a></div>
+          <div class="panel-body tight">
+            <div class="grid grid-4" style="gap:14px">
+              <div><span class="hint-text">Ordem de serviço</span><div class="mono" id="doc-sum-os" style="font-weight:700">—</div></div>
+              <div><span class="hint-text">Comarca / setor</span><div id="doc-sum-local" style="font-weight:600;font-size:12px">—</div></div>
+              <div><span class="hint-text">Patrimônios S / I</span><div class="mono" id="doc-sum-patr" style="font-weight:600">—</div></div>
+              <div><span class="hint-text">Data do atendimento</span><div id="doc-sum-data" style="font-weight:600">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel mt-16">
+          <div class="panel-head"><h2>Documentos externos (HP/TJMG)</h2><span class="badge badge-amber">Não gerados pela Wyntech</span></div>
+          <div class="panel-body tight">
+            <div class="stack-sm">
+              <div class="callout"><svg class="icon"><use href="#i-external"/></svg><div><strong>RAT — Relatório de Atendimento Técnico</strong><br>Gerado no HP. Imprimir, conferir e colher a assinatura do usuário.</div></div>
+              <div class="callout"><svg class="icon"><use href="#i-external"/></svg><div><strong>Guia de Transporte</strong><br>Documento físico que acompanha o equipamento. Conferir assinatura antes da saída.</div></div>
+              <div class="callout"><svg class="icon"><use href="#i-external"/></svg><div><strong>Termo de Substituição</strong><br>Emitido pelo TJMG. A TR só é válida com a assinatura do Magistrado.</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TELA 8 — HISTÓRICO
+           ============================================================ -->
+      <section class="screen" id="screen-historico" data-screen="historico" aria-labelledby="historico-title">
+        <div class="page-head">
+          <div class="page-head-main">
+            <div class="eyebrow">Acervo</div>
+            <h1 id="historico-title">Histórico</h1>
+            <p class="lede">Atendimentos concluídos e em andamento. A busca filtra por OS, comarca, usuário ou patrimônio.</p>
+          </div>
+          <div class="page-head-actions">
+            <a class="btn btn-primary" href="#/chamado"><svg class="icon"><use href="#i-plus"/></svg>Novo chamado</a>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head" style="flex-wrap:wrap">
+            <div class="field" style="flex:1;min-width:220px;max-width:420px">
+              <label class="sr-only" for="history-search">Buscar no histórico</label>
+              <div class="input-group">
+                <input class="input" id="history-search" type="search" placeholder="Buscar OS, comarca, usuário ou patrimônio" autocomplete="off">
+                <span class="icon-btn" aria-hidden="true"><svg class="icon"><use href="#i-search"/></svg></span>
+              </div>
+            </div>
+            <div class="chip-row" id="history-filters">
+              <button class="chip is-on" type="button" data-filter="all">Todos</button>
+              <button class="chip" type="button" data-filter="TR">Rollout (TR)</button>
+              <button class="chip" type="button" data-filter="IN">Incidentes (IN)</button>
+              <button class="chip" type="button" data-filter="Pará de Minas">Pará de Minas</button>
+              <button class="chip" type="button" data-filter="Itaúna">Itaúna</button>
+            </div>
+          </div>
+          <div class="record-list" id="history-list"></div>
+          <div class="empty" id="history-empty" hidden>
+            <svg class="icon"><use href="#i-search"/></svg>
+            <strong>Nenhum atendimento encontrado</strong>
+            <span>Ajuste a busca ou selecione outro filtro.</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= BOTTOM NAV (mobile) ================= -->
+    <nav class="bottom-nav" aria-label="Navegação rápida">
+      <div class="bottom-nav-inner">
+        <a class="bnav" href="#/workspace" data-nav="workspace"><svg class="icon"><use href="#i-grid"/></svg><span>Painel</span></a>
+        <a class="bnav" href="#/chamado" data-nav="chamado"><svg class="icon"><use href="#i-plus"/></svg><span>Chamado</span></a>
+        <a class="bnav" href="#/rollout" data-nav="rollout"><svg class="icon"><use href="#i-swap"/></svg><span>Rollout</span></a>
+        <a class="bnav" href="#/pop030" data-nav="pop030"><svg class="icon"><use href="#i-tool"/></svg><span>POP030</span></a>
+        <a class="bnav" href="#/documentos" data-nav="documentos"><svg class="icon"><use href="#i-file"/></svg><span>Docs</span></a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ================= MODAL DE DOCUMENTO ================= -->
+<div class="modal-overlay" id="doc-modal" role="dialog" aria-modal="true" aria-labelledby="doc-modal-title">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <div class="modal-kicker">Pré-visualização</div>
+        <h2 id="doc-modal-title">Documento</h2>
+        <div class="hint-text" id="doc-modal-sub">—</div>
+      </div>
+      <div class="modal-head-actions">
+        <div class="seg" role="group" aria-label="Modo do documento">
+          <button type="button" id="mode-filled" class="is-on" aria-pressed="true">Preenchido</button>
+          <button type="button" id="mode-blank" aria-pressed="false">Em branco</button>
+        </div>
+        <button class="icon-btn" type="button" data-action="close-doc" aria-label="Fechar documento"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="printable-sheet-wrapper" id="doc-sheet"></div>
+    </div>
+    <div class="modal-foot">
+      <span class="hint-text" id="doc-foot-hint">Use “Salvar como PDF” na janela de impressão.</span>
+      <div class="btn-row">
+        <button class="btn btn-secondary" type="button" id="doc-share"><svg class="icon"><use href="#i-whatsapp"/></svg>WhatsApp</button>
+        <button class="btn btn-primary" type="button" id="doc-print"><svg class="icon"><use href="#i-printer"/></svg>Imprimir / Salvar PDF</button>
+      </div>
+    </div>
+  </div>
+</div>

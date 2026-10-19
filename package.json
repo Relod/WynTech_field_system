@@ -1,0 +1,20 @@
+{
+  "name": "wyntech-campo-tjmg",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Protótipo do console de campo Wyntech TJMG — atendimento, rollout, POP030 e documentos.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Relod/WynTech_field_system.git"
+  },
+  "author": "Wyntech / TJMG",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node prototipo/build.js",
+    "preview": "node scripts/serve.js",
+    "verify:draft": "node scripts/verify-draft.js"
+  }
+}
