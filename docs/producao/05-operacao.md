@@ -42,7 +42,7 @@ Acesse `http://127.0.0.1:3000`.
 | Variável | Padrão | Obrigatória | Observação |
 | --- | --- | --- | --- |
 | `NODE_ENV` | `development` | não | `production` ativa validações e HSTS. |
-| `HOST` | `127.0.0.1` | não | Use `0.0.0.0` atrás de proxy. |
+| `HOST` | `127.0.0.1` | não | Mantenha `127.0.0.1` atrás do Nginx. Só use `0.0.0.0` se não houver proxy e o firewall proteger a porta. |
 | `PORT` | `3000` | não | Inteiro 1..65535. |
 | `DB_PATH` | `./data/wyntech.sqlite` | não | Absoluto ou relativo à raiz. |
 | `AUTH_SECRET` | segredo de dev | **sim em produção** | Mínimo 32 caracteres. |
@@ -59,11 +59,11 @@ Acesse `http://127.0.0.1:3000`.
 | `SEED_TECNICO_EMAIL` | `tecnico@wyntech.local` | não | |
 | `SEED_TECNICO_PASSWORD` | `Wyntech@2026` | não | Troque antes de dados reais. |
 
-Exemplo mínimo de produção:
+Exemplo mínimo de produção em VPS com Nginx:
 
 ```dotenv
 NODE_ENV=production
-HOST=0.0.0.0
+HOST=127.0.0.1
 PORT=3000
 DB_PATH=/var/lib/wyntech/wyntech.sqlite
 AUTH_SECRET=<64 caracteres aleatórios>
@@ -75,6 +75,9 @@ SEED_ADMIN_PASSWORD=<senha forte>
 SEED_TECNICO_EMAIL=tecnico@dominio
 SEED_TECNICO_PASSWORD=<senha forte>
 ```
+
+O roteiro completo da VPS de 1 GB está em
+[12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md).
 
 Gere o segredo com:
 
@@ -110,52 +113,64 @@ node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 
 ## 6. Produção
 
-1. Provisione Node 24 e um diretório persistente para o SQLite.
-2. Crie o `.env` de produção com segredos fortes e `COOKIE_SECURE=true`.
+1. Provisione Node 24 e um diretório persistente para o SQLite (na VPS de
+   1 GB, crie também 2 GB de swap).
+2. Crie o `.env` de produção com segredos fortes, `HOST=127.0.0.1` e
+   `COOKIE_SECURE=true`.
 3. Rode `npm run setup` (ou `db:migrate` + `db:seed`) uma vez.
-4. Inicie com `npm start` sob um supervisor (systemd, PM2, Passenger etc.).
-5. Coloque um proxy reverso com TLS na frente.
-6. Restrinja firewall: o Node não deve ficar exposto diretamente.
-7. Monitore `/api/health` e os logs do processo.
-8. Faça backup do `.sqlite` antes de atualizações.
+4. Inicie com `npm start` sob o systemd, usando o modelo de `deploy/`.
+5. Coloque Nginx com TLS na frente e mantenha a porta 3000 fechada.
+6. Restrinja firewall (22/80/443) e desabilite root/senha no SSH.
+7. Monitore `/api/health`, logs, disco e memória.
+8. Faça backup do `.sqlite` antes de atualizações e mantenha cópia externa.
 
-Exemplo de unidade systemd (ajuste caminhos/usuário):
+O modelo pronto está em
+[`deploy/wyntech.service`](../../deploy/wyntech.service). Ele assume:
 
-```ini
-[Unit]
-Description=Wyntech Campo TJMG
-After=network.target
+- Node em `/usr/bin/node` (instalação NodeSource);
+- código em `/opt/wyntech`, usuário de serviço `wyntech`;
+- banco em `/var/lib/wyntech/wyntech.sqlite`;
+- `EnvironmentFile=/opt/wyntech/.env`;
+- isolamento do sistema de arquivos e `MemoryMax=512M`, adequado ao plano de
+  1 GB.
 
-[Service]
-Type=simple
-User=wyntech
-WorkingDirectory=/opt/wyntech
-EnvironmentFile=/opt/wyntech/.env
-ExecStart=/usr/bin/node server/index.js
-Restart=on-failure
-RestartSec=5
-NoNewPrivileges=true
-PrivateTmp=true
-ReadWritePaths=/var/lib/wyntech
+Instale e ative:
 
-[Install]
-WantedBy=multi-user.target
+```bash
+sudo cp deploy/wyntech.service /etc/systemd/system/wyntech.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now wyntech
+curl -fsS http://127.0.0.1:3000/api/health
 ```
 
 O diretório do banco e o `.env` devem ter permissão restrita ao usuário do
-serviço. Não execute como root.
+serviço. Não execute como root. Ajuste `ExecStart` se o Node estiver em outro
+caminho; o passo a passo da VPS está em
+[12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md).
 
 ## 7. Backup e atualização
 
-Antes de atualizar:
+Na VPS, use o backup lógico com a aplicação rodando:
 
 ```bash
-# com a aplicação parada
+sudo systemctl start wyntech-backup.service
+```
+
+O script está em
+[`deploy/backup-wyntech.sh`](../../deploy/backup-wyntech.sh), usa
+`VACUUM INTO`, gera checksum e aplica retenção. O timer diário está em
+[`deploy/wyntech-backup.timer`](../../deploy/wyntech-backup.timer). Para
+detalhes de instalação e restauração, consulte
+[12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md#9-backup-e-restauração).
+
+No ambiente local, o equivalente é:
+
+```bash
 cp data/wyntech.sqlite backup/wyntech-$(date +%F).sqlite
 ```
 
-Ou use `VACUUM INTO` com a aplicação rodando (ver
-[03 — Banco de dados](03-banco-de-dados.md)). Depois:
+Ou use `VACUUM INTO` (ver [03 — Banco de dados](03-banco-de-dados.md)). Depois
+de atualizar:
 
 ```bash
 npm run db:migrate
@@ -193,9 +208,13 @@ Mantenha pelo menos uma cópia externa e teste a restauração periodicamente.
 - Troque as senhas iniciais pela tela **Meu perfil** imediatamente.
 - Remova ou desative usuários de teste antes de dados reais (não há tela de
   administração; faça via SQL com backup).
-- Restrinja o Apps Script ao domínio TJMG e revise “Executar como”.
+- Restrinja o Apps Script à conta/domínio autorizado e revise “Executar como”.
 - Não versionar `.env`, banco, backups, logs ou capturas com dados reais.
 - A URL oficial é configurada no servidor; não a coloque no frontend/repo.
+- Na VPS, use SSH por chave, root desabilitado, UFW, fail2ban e atualizações
+  automáticas. O Node deve escutar somente em `127.0.0.1`.
+- Proteja a conta do provedor com 2FA e mantenha backup externo ao disco da VPS.
 
-Consulte [07 — Segurança](07-seguranca.md) e
-[06 — Deploy e hospedagem](06-deploy-hospedagem.md).
+Consulte [07 — Segurança](07-seguranca.md),
+[06 — Deploy e hospedagem](06-deploy-hospedagem.md) e
+[12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md).

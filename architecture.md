@@ -1,8 +1,10 @@
 # Arquitetura — Wyntech Campo TJMG
 
 > **Versão:** 0.8.0 · **Atualizado em:** 19/10/2026  
-> **Status:** MVP real funcional em ambiente local; hospedagem e integração
-> externa do Apps Script ainda pendentes.  
+> **Status:** MVP real funcional em ambiente local; hospedagem definida em VPS
+> 1 GB Linux, com deploy pendente; integração externa do Apps Script ainda
+> pendente.
+>
 > **Documento histórico:** o plano original PHP/MySQL foi preservado em
 > [`docs/producao/historico/arquitetura-plano-php-mysql.md`](docs/producao/historico/arquitetura-plano-php-mysql.md).
 
@@ -29,13 +31,19 @@ O sistema é uma aplicação web monolítica, servida pelo próprio Node.js:
 │          └── rotas /api/auth, /api/chamados, /api/dashboard  │
 │                            │                                 │
 │                            ▼                                 │
-│                     SQLite (node:sqlite)                     │
-│                     data/wyntech.sqlite                      │
+│   SQLite (node:sqlite)                                       │
+│   dev: data/wyntech.sqlite · prod: /var/lib/wyntech/...      │
 └──────────────────────────────────────────────────────────────┘
 
 Atalho externo (opcional): Web App do Google Apps Script
   Laudo/Romaneio A4 validado · recebe rascunho JSON
 ```
+
+Em produção, o Nginx termina o TLS no domínio pessoal e encaminha para
+`127.0.0.1:3000`; o Node não fica exposto diretamente. O SQLite fica em
+`/var/lib/wyntech` e o backup diário em `/var/backups/wyntech` (com cópia
+externa). Detalhes em
+[`docs/producao/12-deploy-vps-1gb.md`](docs/producao/12-deploy-vps-1gb.md).
 
 Não há servidor de aplicação separado, bundler, framework frontend ou
 dependências npm de runtime. O banco é acessado por SQL parametrizado e as
@@ -50,7 +58,7 @@ migrações são arquivos SQL versionados.
 | `server/http.js` | Leitura de corpo com limite, JSON, erros, CORS opcional, estáticos e cabeçalhos. |
 | `server/router.js` | Roteamento por método/caminho, parâmetros e rejeição de caminhos malformados. |
 | `server/auth.js` | `scrypt`, JWT HS256, sessões persistidas, cookie HttpOnly e revogação. |
-| `server/db.js` | Abertura do SQLite, `PRAGMA foreign_keys`, migrações e backup. |
+| `server/db.js` | Abertura do SQLite, `PRAGMA foreign_keys` e migrações; o backup lógico fica em `deploy/backup-wyntech.sh`. |
 | `server/validation.js` | Validação de strings, inteiros, enums, datas e objetos. |
 | `server/routes/` | Regras de autenticação, chamados, equipamentos, trocas, documentos, comarcas e dashboard. |
 | `public/` | SPA sem framework; HTML, CSS e JavaScript servidos pelo mesmo domínio. |
@@ -148,11 +156,16 @@ O modelo de ameaças e a checklist de produção estão em
 | [0001](docs/producao/adr/0001-nodejs-sqlite.md) | Node.js + SQLite sem dependências de runtime. |
 | [0002](docs/producao/adr/0002-gerador-oficial-como-fonte-a4.md) | Gerador oficial é a fonte do A4 nesta versão. |
 | [0003](docs/producao/adr/0003-sessao-cookie-httponly.md) | Sessão em cookie HttpOnly + JWT persistido. |
+| [0004](docs/producao/adr/0004-vps-1gb-nginx.md) | VPS 1 GB Linux, domínio pessoal, Nginx/TLS e backup externo. |
 
 ## 9. Limites atuais e evolução
 
-- O MVP foi validado localmente; a hospedagem compartilhada ainda não foi
-  escolhida. É necessário Node 24 e disco persistente para o SQLite.
+- O MVP foi validado localmente; a hospedagem definida é uma VPS Linux de 1 GB
+  com disco persistente, swap e limite de memória. O deploy ainda não foi
+  executado. Não há escala horizontal sem migração do SQLite.
+- A VPS é pública e usa domínio pessoal; SSH, firewall, TLS, atualizações e
+  backup externo são obrigatórios. O console não é uma publicação oficial do
+  TJMG.
 - O A4 local não foi portado; a impressão permanece no Apps Script validado.
 - Não há upload de fotos/anexos, gestão de usuários, notificações ou integração
   automática com o Apps Script.
@@ -168,5 +181,6 @@ O modelo de ameaças e a checklist de produção estão em
 - [API](docs/producao/04-api.md)
 - [Operação](docs/producao/05-operacao.md)
 - [Deploy](docs/producao/06-deploy-hospedagem.md)
+- [Runbook da VPS 1 GB](docs/producao/12-deploy-vps-1gb.md)
 - [Testes](docs/producao/08-testes.md)
 - [Roadmap](docs/producao/09-roadmap.md)

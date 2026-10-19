@@ -9,16 +9,20 @@ Concluído:
   trocas, documentos, dashboard, perfil e testes.
 - Documentação de produção e ADRs.
 - Capturas finais do MVP em desktop e mobile.
+- Hospedagem definida: VPS 1 GB Linux (LocalWeb/Locaweb), 2 vCPU, 40 GB SSD,
+  domínio pessoal. Deploy pendente.
 
 ## Prioridade 1 — Colocar em produção com segurança
 
-1. **Definir a hospedagem** compatível com Node 24 e disco persistente.
+1. **Provisionar a VPS 1 GB** e executar o runbook
+   [12 — VPS 1 GB](12-deploy-vps-1gb.md), incluindo DNS e TLS.
 2. **Trocar senhas e segredos**, desativar usuários de teste.
-3. **Restringir o Apps Script** ao domínio TJMG e revisar “Executar como”.
-4. **Configurar backup automático** com teste de restauração.
+3. **Restringir o Apps Script** à conta/domínio autorizado e revisar “Executar
+   como”.
+4. **Configurar backup diário + cópia externa** com teste de restauração.
 5. **Adicionar logos oficiais** TJMG/Wyntech e revisar a marca.
 6. **Validar a URL oficial** no ambiente de produção.
-7. **Monitorar** `/api/health`, erros e uso de disco.
+7. **Monitorar** `/api/health`, erros, disco, memória e swap.
 
 Critério de saída: checklist de go-live de
 [06 — Deploy](06-deploy-hospedagem.md) completa.
@@ -77,7 +81,7 @@ Qualquer mudança no Apps Script exige decisão separada: o MVP atual não alter
 - App nativo, PWA offline e sincronização.
 - Assinatura digital e PDF local no console.
 - Integração automática com sistemas do TJMG.
-- MFA (avaliar depois da hospedagem).
+- MFA (avaliar depois do go-live).
 - Multi-tenant.
 
 ## Como priorizar

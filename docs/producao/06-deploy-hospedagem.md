@@ -1,178 +1,205 @@
 # 06 — Deploy e hospedagem
 
-> **A hospedagem ainda não foi escolhida.** Este documento define requisitos e
-> uma checklist para validar qualquer provedor antes de publicar dados reais.
+> **Decisão de 19/10/2026:** publicar em uma **VPS Linux de 1 GB** (plano
+> LocalWeb/Locaweb, 2 vCPU, 40 GB SSD), com acesso root/SSH e **domínio
+> pessoal**, fora do domínio do TJMG. O deploy ainda não foi executado.
+>
+> O passo a passo operacional, com comandos e checklist, está em
+> [12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md). Este documento registra a
+> decisão, a capacidade e os critérios de go-live.
+>
+> A VPS é **auto-gerenciada**: o provedor entrega root/SSH e infraestrutura, não
+> a aplicação pronta. O runbook assume esse modelo.
 
-## 1. Requisitos obrigatórios
+## 1. Por que o plano atende
 
-| Requisito | Por quê |
+| Recurso | Contratado | Avaliação para o MVP |
+| --- | --- | --- |
+| Memória | 1 GB | Suficiente para Node 24 + SQLite + Nginx com **swap de 2 GB**, heap limitado e sem Docker/MySQL no mesmo host. É o mínimo; monitorar e migrar para 2 GB se houver pressão sustained. |
+| vCPU | 2 | Folgado para um único processo Node e volume baixo. |
+| Disco | 40 GB SSD | Folgado para código, SQLite, logs e backups locais. Manter pelo menos 20% livre. |
+| Rede | IPv4 público | Necessário para DNS e Let's Encrypt. Confirmar o IP no painel. |
+| Acesso | root/SSH | Permite instalar Node 24, Nginx, Certbot e systemd. Exige hardening imediato. |
+| Snapshot | 1 instantâneo | Útil antes de atualizações, **não substitui** backup lógico nem cópia externa. |
+
+O sistema é leve: um processo Node, frontend estático e SQLite. A maior pressão
+em 1 GB vem do sistema operacional, Nginx, picos de `npm`/testes e logs. Por
+isso o runbook:
+
+- cria **2 GB de swap** com `vm.swappiness=10`;
+- limita o serviço a **512 MB** (`MemoryMax`) e o heap a **320 MB**;
+- mantém Node escutando apenas em `127.0.0.1:3000`;
+- não instala Docker, MySQL, PostgreSQL ou painel adicional.
+
+Se o monitoramento mostrar uso de memória contínuo acima de ~70%, swap intenso
+ou reinícios por OOM, o próximo passo é migrar para o plano de 2 GB — sem mudar
+a arquitetura.
+
+## 2. Requisitos obrigatórios
+
+| Requisito | Como atender |
 | --- | --- |
-| Node.js **24+** | O código usa `node:sqlite` e `--env-file-if-exists`. |
-| Processo Node persistente | O servidor é um processo HTTP contínuo, não serverless. |
-| Disco persistente | O SQLite é um arquivo local e precisa sobreviver a deploys/reinícios. |
-| HTTPS | Cookie de sessão e dados de campo exigem TLS. |
-| Um único nó/instância | SQLite não deve ser compartilhado entre instâncias. |
-| Backup restaurável | Banco, `.env` e documentos são críticos. |
-| Acesso a logs | Diagnóstico de erros e auditoria básica. |
+| Node.js **24+** | Instalar pelo NodeSource e confirmar `node -v`. |
+| Processo persistente | systemd mantém o processo Node ativo. |
+| Disco persistente | SQLite em `/var/lib/wyntech`; nunca em `/tmp` ou overlay efêmero. |
+| HTTPS | Nginx + Certbot/Let's Encrypt no domínio pessoal. |
+| Um único nó | SQLite não deve ser compartilhado entre réplicas. |
+| Backup restaurável | Backup local diário + cópia externa + teste de restauração. |
+| Acesso a logs | `journalctl` e logs do Nginx com rotação. |
+| Hardening de borda | SSH por chave, root desabilitado, UFW e fail2ban. |
 
-Se o provedor só oferecer MySQL/PostgreSQL, será necessário criar um adaptador
-de banco (`server/db.js` e queries) antes de contratar. Isso não está no MVP.
+Se o provedor mudar para uma plataforma que só ofereça MySQL/PostgreSQL, será
+necessário criar um adaptador de banco antes de publicar. Isso não está no MVP.
 
-## 2. Opções compatíveis
+## 3. Topologia de produção
 
-1. **VPS Linux** (recomendado para controle): Node 24 + systemd + Nginx +
-   diretório `/var/lib/wyntech` com backup.
-2. **PaaS com disco persistente** e runtime Node 24: validar volume montado,
-   processo contínuo e backup.
-3. **Hospedagem compartilhada com Passenger/Node**: só aceitar se a versão for
-   24+, houver disco persistente e o processo não for reiniciado a cada request.
+```text
+Navegador
+   │ HTTPS 443 (cookie Secure, HSTS)
+   ▼
+Nginx ──► 127.0.0.1:3000 (Node 24, systemd)
+             │
+             ▼
+       SQLite em /var/lib/wyntech/wyntech.sqlite
+             │
+             └── backup diário em /var/backups/wyntech + cópia externa
+```
 
-Evite:
-- funções serverless sem disco persistente;
-- ambientes somente leitura;
-- Node 18/20/22 sem suporte a `node:sqlite` estável;
-- cluster com múltiplas réplicas apontando para o mesmo SQLite;
-- provedor que não permita restaurar o arquivo do banco.
+- Firewall libera apenas **22, 80 e 443**.
+- A porta **3000 não é aberta** no firewall; o Node fica em loopback.
+- O domínio é pessoal (ex.: `campo.seudominio.com.br`), com registro DNS `A`
+  apontando para o IPv4 da VPS.
+- O Web App do Apps Script continua sendo um serviço Google separado.
 
-## 3. Preparação do pacote
+## 4. Pacote de deploy
 
-O repositório não tem dependências npm de runtime. Ainda assim, o deploy deve
-levar:
+O repositório não tem dependências npm de runtime. O deploy leva:
 
 ```text
 server/            # API
 public/            # frontend
 scripts/           # setup/migração/seed
-data/.gitkeep      # diretório do banco (não versionar o .sqlite)
+deploy/            # systemd, Nginx e backup
+data/.gitkeep      # diretório local do banco (não versionar o .sqlite)
 package.json
 .env.example
 ```
 
 Não envie `.env`, `data/*.sqlite`, backups, `node_modules` ou capturas com dados
-reais. O processo precisa de acesso de leitura ao código e escrita apenas no
-diretório do banco/logs.
+reais. O processo precisa de leitura no código e escrita apenas em
+`/var/lib/wyntech`.
 
-## 4. Passo a passo em VPS
+## 5. Nginx e TLS
 
-```bash
-# usuário de serviço, sem root
-sudo useradd --system --create-home --home-dir /opt/wyntech wyntech
-sudo mkdir -p /var/lib/wyntech /opt/wyntech
-sudo chown -R wyntech:wyntech /opt/wyntech /var/lib/wyntech
-
-# código
-sudo -u wyntech git clone <repo> /opt/wyntech
-cd /opt/wyntech
-sudo -u wyntech cp .env.example .env
-sudo -u wyntech nano .env
-
-# configuração de produção
-# NODE_ENV=production
-# HOST=127.0.0.1
-# PORT=3000
-# DB_PATH=/var/lib/wyntech/wyntech.sqlite
-# AUTH_SECRET=<64 chars>
-# COOKIE_SECURE=true
-# TRUST_PROXY=true
-# OFFICIAL_LAUDO_URL=https://script.google.com/macros/s/.../exec
-
-sudo -u wyntech npm run setup
-sudo -u wyntech npm test
-```
-
-Instale a unidade systemd de [05 — Operação](05-operacao.md), habilite e suba:
+O modelo inicial está em
+[`deploy/nginx-wyntech.conf.example`](../../deploy/nginx-wyntech.conf.example).
+Substitua `campo.SEU_DOMINIO` e rode:
 
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now wyntech
-curl http://127.0.0.1:3000/api/health
+sudo certbot --nginx -d campo.seudominio.com.br --redirect
 ```
 
-## 5. Nginx + TLS
+O Certbot acrescenta o bloco 443 e o redirect HTTP → HTTPS. Depois:
 
-Exemplo de proxy (ajuste domínio e caminhos):
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name campo.exemplo.tjmg;
-
-    ssl_certificate     /etc/letsencrypt/live/campo.exemplo.tjmg/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/campo.exemplo.tjmg/privkey.pem;
-
-    client_max_body_size 1m;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-Com proxy confiável, `TRUST_PROXY=true` faz o rate limit usar o IP real. **Não**
-ative essa opção se o Node estiver exposto diretamente, pois o cliente poderia
-falsificar `X-Forwarded-For`.
+- confirme `https://` com certificado válido;
+- mantenha `COOKIE_SECURE=true`;
+- use `TRUST_PROXY=true` **somente** atrás do Nginx;
+- mantenha `HOST=127.0.0.1`;
+- teste `certbot renew --dry-run`.
 
 ## 6. Checklist de go-live
 
-- [ ] Node 24 confirmado no servidor.
-- [ ] `AUTH_SECRET` aleatório com 32+ caracteres, fora do Git.
-- [ ] `NODE_ENV=production` e `COOKIE_SECURE=true`.
-- [ ] HTTPS válido e redirect HTTP → HTTPS.
-- [ ] Senhas do seed trocadas; usuários de teste removidos/desativados.
-- [ ] Banco em disco persistente, com permissão restrita.
-- [ ] Backup automático testado e restauração documentada.
-- [ ] `OFFICIAL_LAUDO_URL` configurada e validada.
-- [ ] Apps Script restrito ao domínio TJMG e “Executar como” revisado.
-- [ ] `/api/health` monitorado.
-- [ ] Logs sem dados sensíveis e com rotação.
-- [ ] Teste de login, chamado, equipamento, troca, documento e perfil em
-      desktop e celular.
-- [ ] Termos/aviso de privacidade e retenção definidos com o TJMG.
+- [ ] VPS criada com Ubuntu 24.04 LTS, IP e snapshot inicial anotados.
+- [ ] DNS `A` do domínio pessoal aponta para a VPS e já propagou.
+- [ ] SSH por chave; login de root e senha desabilitados.
+- [ ] UFW ativo, liberando apenas 22/80/443; fail2ban ativo.
+- [ ] Atualizações automáticas de segurança habilitadas.
+- [ ] Swap de 2 GB ativo e `vm.swappiness=10`.
+- [ ] Node 24 confirmado (`node -v` e teste de `node:sqlite`).
+- [ ] Código em `/opt/wyntech`, usuário de serviço `wyntech` sem login.
+- [ ] `.env` com permissão `600`; banco em `/var/lib/wyntech` com `700`.
+- [ ] `AUTH_SECRET` aleatório com 64 caracteres; senhas do seed fortes.
+- [ ] Senhas iniciais trocadas pela tela **Meu perfil**; técnico de teste
+      desativado se não for usado.
+- [ ] `NODE_ENV=production`, `HOST=127.0.0.1`, `COOKIE_SECURE=true` e
+      `TRUST_PROXY=true`.
+- [ ] Migrações e seed aplicados; `systemctl status wyntech` ativo.
+- [ ] `/api/health` responde via HTTPS.
+- [ ] Nginx com TLS válido, redirect e HSTS; `certbot renew --dry-run` passa.
+- [ ] Backup diário agendado, primeira execução validada e **restauração
+      testada** em cópia.
+- [ ] Cópia externa do backup configurada (rclone, storage externo ou snapshot
+      do provedor como complemento).
+- [ ] `OFFICIAL_LAUDO_URL` configurada e validada; Apps Script restrito à conta
+      ou ao domínio TJMG, conforme o caso.
+- [ ] Logs sem segredos, com retenção e disco monitorado.
+- [ ] Fluxos de login, chamado, equipamento, troca, documento e perfil testados
+      em desktop e celular.
+- [ ] Política de retenção/privacidade definida; se houver dados do TJMG,
+      autorização e tratamento validados com a área responsável.
 
 ## 7. Atualização e rollback
 
-Atualização:
+Antes de atualizar, faça backup e teste a nova versão:
 
 ```bash
 cd /opt/wyntech
-sudo -u wyntech git fetch --all
-sudo -u wyntech git checkout main
-sudo -u wyntech git pull --ff-only
-sudo -u wyntech npm run db:migrate
-sudo -u wyntech npm test
+sudo systemctl start wyntech-backup.service
+sudo -H -u wyntech git fetch --all --prune
+sudo -H -u wyntech git checkout main
+sudo -H -u wyntech git pull --ff-only
+sudo -H -u wyntech bash -c 'cd /opt/wyntech && /usr/bin/npm run db:migrate'
 sudo systemctl restart wyntech
+curl -fsS https://campo.seudominio.com.br/api/health
 ```
 
-Antes de atualizar, faça backup do banco. Rollback de código é possível com
-`git checkout <tag>`; rollback de migração não é automático. Por isso, migrações
-devem ser compatíveis com a versão anterior ou acompanhadas de plano de
-restauração.
+- Nunca execute `npm run db:reset` em produção.
+- Migrações devem ser compatíveis com a versão anterior ou acompanhadas de
+  plano de restauração.
+- Rollback de código é possível com `git checkout <commit/tag>`.
+- Se a migração não for reversível, restaure o backup do banco junto com o
+  código anterior.
+- Faça um snapshot do provedor antes de atualizações grandes do sistema
+  operacional; ele não substitui o backup lógico.
 
-## 8. Se o provedor for compartilhado
+## 8. Domínio, exposição e responsabilidade
 
-Confirme por escrito com o provedor:
+- O console será publicado em **domínio pessoal**, não em domínio do TJMG. Isso
+  não implica endosso ou publicação oficial do Tribunal.
+- A VPS fica exposta à internet. A autenticação é o controle principal; para
+  reduzir a superfície, avalie **Cloudflare Access**, **Tailscale/VPN** ou uma
+  lista de IPs permitidos no UFW.
+- Se for usar Cloudflare como proxy, restrinja a origem aos IPs da Cloudflare;
+  caso contrário, o `X-Forwarded-For` pode ser falsificado e o rate limit de
+  login perde eficácia.
+- O Apps Script continua sujeito à conta Google e às regras de compartilhamento
+  do TJMG. O domínio pessoal do console não concede acesso ao gerador.
+- O fato de o domínio ser pessoal não altera a natureza dos dados. Se o console
+  armazenar atendimentos, patrimônios ou dados pessoais do TJMG, confirme
+  autorização de uso, retenção e armazenamento em infraestrutura particular com
+  a área responsável. Sem essa definição, use apenas dados fictícios.
 
-1. versão exata do Node e disponibilidade de `node:sqlite`;
-2. se o processo fica contínuo;
-3. onde o banco pode ser gravado e se o diretório sobrevive a deploy;
-4. como é feito backup/restauração;
-5. limites de memória/CPU e timeout;
-6. suporte a HTTPS e variáveis de ambiente;
-7. política de logs.
+## 9. Se o provedor mudar
 
-Se qualquer resposta for “não”, o MVP não deve ir para esse ambiente sem
-adaptação (por exemplo, MySQL/PostgreSQL e storage externo).
+Os modelos em `deploy/` funcionam em qualquer VPS Linux com root/SSH. Antes de
+contratar outro provedor, confirme por escrito:
 
-## 9. Domínio e acesso externo
+1. versão exata do Node e suporte a `node:sqlite`;
+2. processo contínuo, sem reinício a cada request;
+3. disco persistente e local para o SQLite;
+4. backup/restauração e snapshot;
+5. limites de memória/CPU e política de OOM;
+6. HTTPS, DNS e IP fixo;
+7. política de logs e retenção.
 
-- Use um subdomínio interno (ex.: `campo.wyntech...`) com certificado válido.
-- Restrinja o acesso por VPN/rede TJMG se possível.
-- O Web App oficial é um serviço Google separado; restringir a URL no console
-  não substitui a configuração de compartilhamento do Apps Script.
-- Não publique a URL oficial em repositório público; ela fica no `.env` do
-  servidor.
+Hospedagem compartilhada com Passenger/Node só deve ser considerada se cumprir
+Node 24, processo contínuo e disco persistente. Caso contrário, o MVP não deve
+ir para esse ambiente sem adaptação.
+
+## 10. Referências
+
+- [12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md)
+- [05 — Operação](05-operacao.md)
+- [07 — Segurança](07-seguranca.md)
+- [10 — Integração com o gerador](10-integracao-gerador.md)
+- [Modelos de deploy](../../deploy/README.md)

@@ -1,0 +1,18 @@
+[Unit]
+Description=Backup lógico do banco Wyntech
+After=network-online.target wyntech.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=wyntech
+Group=wyntech
+ExecStart=/usr/local/sbin/wyntech-backup
+Nice=10
+IOSchedulingClass=idle
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/backups/wyntech

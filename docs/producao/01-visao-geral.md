@@ -10,6 +10,10 @@ O MVP real parte do **protótipo v0.7.0 aprovado**. O protótipo continua sendo 
 referência de design e dos documentos A4; o sistema real implementa a operação
 com banco, autenticação e API.
 
+> **Natureza do projeto:** uso pessoal, em VPS e domínio próprios. Não é uma
+> publicação oficial do TJMG. O uso de dados reais de atendimento depende de
+> autorização e definição de retenção com a área responsável.
+
 ## Pessoas usuárias
 
 | Persona | Necessidade principal |
@@ -45,7 +49,7 @@ com banco, autenticação e API.
 
 | Requisito | Como o MVP atende |
 | --- | --- |
-| Simplicidade de operação | Node.js 24 + SQLite, sem dependências de runtime. |
+| Simplicidade de operação | Node.js 24 + SQLite, sem dependências de runtime; VPS única com Nginx e systemd. |
 | Segurança | `scrypt`, JWT + sessão, cookie HttpOnly, CSP, rate limit e validação. |
 | Rastreabilidade | Timestamps, snapshots de documentos e exclusão lógica de chamados. |
 | Responsividade | Layout próprio, validado em 1440 px e 390 px. |
@@ -71,8 +75,10 @@ com banco, autenticação e API.
 | Fluxos de chamado/equipamento/troca/documento | ✅ validados pela interface |
 | Perfil e troca de senha | ✅ implementados |
 | Laudo/Romaneio A4 | ✅ no gerador oficial validado; ❌ não portado para o console |
-| Hospedagem | ⏳ provedor não definido |
+| Hospedagem | ✅ definida: VPS 1 GB Linux (LocalWeb/Locaweb), domínio pessoal; ⏳ deploy pendente |
 | Logos oficiais | ⏳ pendentes |
 | Restrição do Apps Script ao domínio TJMG | ⏳ ação externa pendente |
 
-Consulte o [roadmap](09-roadmap.md) para a sequência recomendada.
+O passo a passo da VPS está em
+[12 — Runbook da VPS 1 GB](12-deploy-vps-1gb.md). Consulte o
+[roadmap](09-roadmap.md) para a sequência recomendada.

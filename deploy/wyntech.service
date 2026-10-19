@@ -1,0 +1,50 @@
+[Unit]
+Description=Wyntech Campo TJMG
+Documentation=https://github.com/Relod/WynTech_field_system
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=wyntech
+Group=wyntech
+WorkingDirectory=/opt/wyntech
+EnvironmentFile=/opt/wyntech/.env
+Environment=NODE_ENV=production
+Environment=NODE_OPTIONS=--max-old-space-size=320
+ExecStart=/usr/bin/node server/index.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+KillSignal=SIGTERM
+UMask=0077
+
+# Isolamento do processo. O código fica somente leitura; o banco fica em
+# /var/lib/wyntech, criado pelo StateDirectory com dono wyntech.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+StateDirectory=wyntech
+StateDirectoryMode=0700
+
+# Adequado ao plano de 1 GB. Ajuste junto com NODE_OPTIONS se o uso crescer.
+MemoryMax=512M
+TasksMax=64
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

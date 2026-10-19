@@ -5,7 +5,11 @@ de informática do TJMG. O repositório reúne o **MVP real** (API, banco,
 autenticação e frontend) e o **protótipo navegável aprovado**, preservado como
 referência visual e documental.
 
-**Versão do MVP:** 0.8.0 · **Protótipo:** 0.7.0 · **Atualizado em:** 19/10/2026 · **Uso interno Wyntech/TJMG** · Node.js 24+ · SQLite · sem dependências de runtime
+**Versão do MVP:** 0.8.0 · **Protótipo:** 0.7.0 · **Atualizado em:** 19/10/2026 · **Uso pessoal · operação Wyntech/TJMG** · Node.js 24+ · SQLite · sem dependências de runtime
+
+> Projeto pessoal, publicado em VPS e domínio próprios. **Não é uma publicação
+> oficial do TJMG.** O uso de dados reais de atendimento depende de autorização
+> e definição de retenção com a área responsável.
 
 <table align="center">
   <tr>
@@ -37,10 +41,11 @@ Credenciais iniciais do seed:
 > Troque as duas senhas no primeiro acesso real, pela tela **Meu perfil**.
 > O seed é idempotente e não redefine senhas de usuários já existentes.
 
-Para produção, copie `.env.example` para `.env`, ajuste `NODE_ENV=production`,
-`HOST=0.0.0.0`, `COOKIE_SECURE=true`, gere um `AUTH_SECRET` forte e configure
+Para produção em VPS atrás do Nginx, copie `.env.example` para `.env`, ajuste
+`NODE_ENV=production`, mantenha `HOST=127.0.0.1`, use `COOKIE_SECURE=true`,
+`TRUST_PROXY=true`, gere um `AUTH_SECRET` forte e configure
 `OFFICIAL_LAUDO_URL`. O passo a passo está em
-[`docs/producao/05-operacao.md`](docs/producao/05-operacao.md) e
+[`docs/producao/12-deploy-vps-1gb.md`](docs/producao/12-deploy-vps-1gb.md) e
 [`docs/producao/06-deploy-hospedagem.md`](docs/producao/06-deploy-hospedagem.md).
 
 ## O que já funciona
@@ -97,6 +102,7 @@ duplica o renderizador A4 nesta versão. A decisão e seus motivos estão em
 │   ├── migrations/          # esquema SQL versionado
 │   └── routes/              # auth, chamados, comarcas e dashboard
 ├── scripts/                 # setup, migração, seed, reset e utilitários
+├── deploy/                  # systemd, Nginx e backup para a VPS
 ├── tests/                   # API, configuração e frontend estático
 ├── data/                    # SQLite local (ignorado pelo Git)
 ├── docs/
@@ -151,6 +157,7 @@ somente HTTPS em `script.google.com` com caminho `/macros/s/.../exec`.
 - [API](docs/producao/04-api.md)
 - [Operação e configuração](docs/producao/05-operacao.md)
 - [Deploy e hospedagem](docs/producao/06-deploy-hospedagem.md)
+- [Runbook da VPS 1 GB](docs/producao/12-deploy-vps-1gb.md)
 - [Segurança](docs/producao/07-seguranca.md)
 - [Testes](docs/producao/08-testes.md)
 - [Integração com o gerador oficial](docs/producao/10-integracao-gerador.md)
@@ -161,15 +168,17 @@ somente HTTPS em `script.google.com` com caminho `/macros/s/.../exec`.
 ## Segurança e limites conhecidos
 
 - Troque as senhas do seed e o `AUTH_SECRET` antes de dados reais.
-- O Apps Script deve ser publicado com acesso restrito ao domínio TJMG e
-  “Executar como” revisado. Isso depende de ação no console do Google.
+- O Apps Script deve ser publicado com acesso restrito à conta/domínio
+  autorizado e “Executar como” revisado. Isso depende de ação no console do
+  Google.
 - A URL do Web App é entregue pela API somente após autenticação e não está
   versionada; ainda assim, quem tem acesso ao console pode vê-la.
 - Os logos oficiais TJMG/Wyntech ainda não estão no repositório; a interface
   usa a marca textual e placeholders neutros.
-- A hospedagem compartilhada ainda não foi definida. O provedor precisa
-  suportar **Node.js 24**, `node:sqlite` e **disco persistente** para o arquivo
-  SQLite.
+- A hospedagem está definida como **VPS 1 GB Linux** (LocalWeb/Locaweb), com
+  domínio pessoal. O deploy ainda não foi executado; o plano atende com swap,
+  limite de memória e backup externo. Veja o
+  [runbook da VPS](docs/producao/12-deploy-vps-1gb.md).
 - Upload de fotos, anexos e administração de usuários estão no roadmap, não no
   MVP atual.
 
@@ -191,4 +200,5 @@ Capturas e detalhes do protótipo estão em
 
 ## Licença
 
-Uso interno Wyntech/TJMG. Projeto privado, sem licença de distribuição pública.
+Projeto pessoal de operação Wyntech/TJMG, não oficial do Tribunal. Uso privado,
+sem licença de distribuição pública.

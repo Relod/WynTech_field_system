@@ -1,0 +1,36 @@
+# /etc/nginx/sites-available/wyntech
+#
+# 1. Substitua campo.SEU_DOMINIO pelo domínio pessoal do console.
+# 2. Ative com:
+#      sudo ln -s /etc/nginx/sites-available/wyntech /etc/nginx/sites-enabled/wyntech
+#      sudo nginx -t && sudo systemctl reload nginx
+# 3. Gere o TLS (o Certbot acrescenta o bloco 443 e o redirect):
+#      sudo certbot --nginx -d campo.SEU_DOMINIO --redirect
+#
+# O Node escuta somente em 127.0.0.1:3000. Não publique a porta 3000.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name campo.SEU_DOMINIO;
+
+    server_tokens off;
+    client_max_body_size 1m;
+    add_header X-Robots-Tag "noindex, nofollow" always;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        # O Nginx é a única borda: sobrescreve o XFF para o cliente não
+        # conseguir falsificar o IP usado no rate limit. Se houver Cloudflare
+        # na frente, configure real_ip e restrinja a origem aos IPs dela.
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+}

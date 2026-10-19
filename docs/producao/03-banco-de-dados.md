@@ -146,12 +146,17 @@ produção.
 
 ## 7. Backup e restauração
 
-Com a aplicação parada, copie o arquivo `.sqlite`. Com a aplicação rodando, use
-`VACUUM INTO` para gerar uma cópia consistente:
+No ambiente local, com a aplicação parada, copie o arquivo `.sqlite`. Com a
+aplicação rodando, use `VACUUM INTO` para gerar uma cópia consistente:
 
 ```bash
 node -e "const {DatabaseSync}=require('node:sqlite');const db=new DatabaseSync('data/wyntech.sqlite');db.exec(\"VACUUM INTO 'backup/wyntech-2026-10-19.sqlite'\");db.close()"
 ```
+
+Na VPS, o banco fica em `/var/lib/wyntech/wyntech.sqlite` e o backup lógico é
+feito pelo script
+[`deploy/backup-wyntech.sh`](../../deploy/backup-wyntech.sh), com checksum e
+retenção. Veja o [runbook da VPS](12-deploy-vps-1gb.md#9-backup-e-restauração).
 
 Restauração: pare o processo, substitua o arquivo (e remova `-wal`/`-shm`
 antigos), confira permissões e suba novamente. Teste a restauração em uma cópia

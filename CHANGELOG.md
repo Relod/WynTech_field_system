@@ -2,6 +2,26 @@
 
 Todas as mudanças relevantes do projeto Wyntech Campo TJMG.
 
+## [Não publicado] — 2026-10-19
+
+### Adicionado
+
+- Decisão de hospedagem em VPS 1 GB Linux (LocalWeb/Locaweb), com domínio
+  pessoal e deploy pendente.
+- Runbook completo da VPS em `docs/producao/12-deploy-vps-1gb.md`.
+- Modelos de deploy em `deploy/`: systemd, Nginx, backup lógico, service e timer.
+- ADR 0004 sobre VPS 1 GB, Nginx/TLS e backup externo.
+
+### Alterado
+
+- README, arquitetura, visão geral, operação, segurança e roadmap atualizados
+  para a VPS definida, uso pessoal e domínio próprio.
+- Política de `HOST=127.0.0.1` atrás do Nginx; removida a recomendação genérica
+  de `0.0.0.0`.
+- Rodapé do login passou de “Uso interno TJMG” para “Console de campo”.
+- Checklist de go-live agora inclui SSH, UFW, fail2ban, swap, limite de memória,
+  TLS e backup externo.
+
 ## [0.8.0] — 2026-10-19
 
 ### Adicionado
@@ -53,7 +73,8 @@ Todas as mudanças relevantes do projeto Wyntech Campo TJMG.
 
 ### Pendente
 
-- Hospedagem compatível com Node 24 e disco persistente.
+- Hospedagem compatível com Node 24 e disco persistente (definida depois; ver
+  “Não publicado”).
 - Logos oficiais e revisão de marca.
 - Restrição do Apps Script ao domínio TJMG e revisão de “Executar como”.
 - Captura de acessórios/checklist no rascunho do MVP.

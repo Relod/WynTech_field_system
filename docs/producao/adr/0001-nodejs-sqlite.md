@@ -4,6 +4,8 @@
 - **Data:** 2026-10-19
 - **Contexto:** MVP de baixo volume, ambiente Windows local sem PHP/Composer/
   Docker/MySQL e hospedagem ainda indefinida.
+- **Nota:** a hospedagem foi definida depois no
+  [ADR 0004](0004-vps-1gb-nginx.md); a decisão de Node.js + SQLite permanece.
 
 ## Decisão
 
@@ -33,8 +35,8 @@ Negativas:
 
 - Precisamos manter roteador, validação e autenticação.
 - SQLite não escala horizontalmente e exige disco persistente.
-- A hospedagem compartilhada precisa suportar Node 24; se não, será necessário
-  adaptar.
+- A VPS escolhida atende Node 24 e disco persistente; se a implantação mudar
+  para hospedagem compartilhada, ela também precisará suportar esses requisitos.
 - Não há ecossistema de middlewares prontos.
 
 ## Alternativas consideradas

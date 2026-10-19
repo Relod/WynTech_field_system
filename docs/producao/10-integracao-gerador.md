@@ -124,7 +124,11 @@ esses campos está no [roadmap](09-roadmap.md).
 - O tipo do documento é registrado no snapshot, mas o rascunho baixado é o
   laudo padrão; o gerador decide o modelo final.
 - O link depende de disponibilidade e permissão do Google.
-- O Apps Script precisa ser publicado com acesso restrito ao domínio TJMG.
+- O Apps Script precisa ser publicado com acesso restrito à conta ou ao domínio
+  TJMG, conforme o caso.
+- O domínio pessoal do console não altera as permissões do Apps Script; o link
+  usa a sessão Google do navegador e continua sujeito ao compartilhamento do
+  script.
 
 ## 6. Segurança e governança
 
